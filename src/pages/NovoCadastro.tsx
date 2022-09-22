@@ -240,7 +240,7 @@ export default function NovoCadastro() {
                   </Form.Group>
                 </Col>
               ))}
-              <Col md={6} sm={12}>
+              <Col md={6} sm={12} xs={12}>
                 <Form.Group
                   className="mb-3"
                   controlId="estado"
@@ -268,7 +268,7 @@ export default function NovoCadastro() {
                   ) : null}
                 </Form.Group>
               </Col>
-              <Col sm={12} md={12}>
+              <Col sm={12} md={12} xs={12}>
                 <ButtonGroup className="w-100 mt-3">
                   <Button
                     variant="primary"
