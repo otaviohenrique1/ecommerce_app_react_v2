@@ -1,7 +1,7 @@
 import { SetStateAction } from "react";
 
 export type LoginUsuarioDataTypes = {
-  usuario: string;
+  email: string;
   senha: string;
 }
 

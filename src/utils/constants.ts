@@ -1,5 +1,41 @@
 import * as yup from "yup";
-import { UsuarioFormTypes } from "../types/types";
+import { LoginUsuarioDataTypes, UsuarioFormTypes } from "../types/types";
+
+export const initialValuesFormLogin: LoginUsuarioDataTypes = {
+  email: "",
+  senha: "",
+};
+
+export const initialValuesFormUsuario: UsuarioFormTypes = {
+  id: "",
+  nome: "",
+  email: "",
+  usuario: "",
+  senha: "",
+  confirmarSenha: "",
+  cpf: "",
+  telefone: "",
+  rua: "",
+  numero: "",
+  complemento: "",
+  bairro: "",
+  cep: "",
+  cidade: "",
+  estado: "",
+  dataCadastro: new Date(),
+  dataEdicao: new Date(),
+};
+
+export const validationSchemaFormLogin = yup.object({
+  email: yup
+    .string()
+    .required('Campo email vazio')
+    .email('Email invalido'),
+  senha: yup
+    .string()
+    .required('Campo senha vazio')
+    .min(8, 'Minimo de 8 caracteres'),
+});
 
 export const validationSchemaFormUsuario = yup.object({
   nome: yup
@@ -58,23 +94,3 @@ export const validationSchemaFormUsuario = yup.object({
     .date()
     .required('Campo data de edição vazio'),
 });
-
-export const initialValuesFormUsuario: UsuarioFormTypes = {
-  id: "",
-  nome: "",
-  email: "",
-  usuario: "",
-  senha: "",
-  confirmarSenha: "",
-  cpf: "",
-  telefone: "",
-  rua: "",
-  numero: "",
-  complemento: "",
-  bairro: "",
-  cep: "",
-  cidade: "",
-  estado: "",
-  dataCadastro: new Date(),
-  dataEdicao: new Date(),
-};
