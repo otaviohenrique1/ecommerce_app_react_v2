@@ -15,9 +15,9 @@ export default function NovoCadastro() {
     initialValues: initialValuesFormUsuario,
     validationSchema: validationSchemaFormUsuario,
     onSubmit: (values: UsuarioDataTypes, formikHelpers: FormikHelpers<UsuarioDataTypes>) => {
-      formikHelpers.setFieldValue("id", uuidv4().toString());
-      formikHelpers.setFieldValue("dataCadastro", new Date());
-      formikHelpers.setFieldValue("dataEdicao", new Date());
+      // formikHelpers.setFieldValue("id", uuidv4().toString());
+      // formikHelpers.setFieldValue("dataCadastro", new Date());
+      // formikHelpers.setFieldValue("dataEdicao", new Date());
       console.log(values);
     }
   });
