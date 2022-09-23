@@ -11,29 +11,32 @@ import { estadosDoBrasil } from '../utils/listas';
 export default function NovoCadastro() {
   const navigate = useNavigate();
 
-  const { criarUsuario } = useContext(UsuarioContext || null) as UsuarioContextType;
+  const { criarUsuario, usuario } = useContext(UsuarioContext || null) as UsuarioContextType;
 
   const formik = useFormik({
     initialValues: initialValuesFormUsuario,
     validationSchema: validationSchemaFormUsuario,
     onSubmit: (values: UsuarioFormTypes, helpers: FormikHelpers<UsuarioFormTypes>) => {
-      criarUsuario({
-        nome: values.nome,
-        email: values.email,
-        usuario: values.usuario,
-        senha: values.senha,
-        cpf: values.cpf,
-        telefone: values.telefone,
-        rua: values.rua,
-        numero: values.numero,
-        complemento: values.complemento,
-        bairro: values.bairro,
-        cep: values.cep,
-        cidade: values.cidade,
-        estado: values.estado,
-      });
-      helpers.resetForm();
-      navigate("/");
+      console.log("asdasdasd");
+      // criarUsuario({
+      //   nome: values.nome,
+      //   email: values.email,
+      //   usuario: values.usuario,
+      //   senha: values.senha,
+      //   cpf: values.cpf,
+      //   telefone: values.telefone,
+      //   rua: values.rua,
+      //   numero: values.numero,
+      //   complemento: values.complemento,
+      //   bairro: values.bairro,
+      //   cep: values.cep,
+      //   cidade: values.cidade,
+      //   estado: values.estado,
+      // });
+      console.log(values);
+      // console.log(usuario);
+      // helpers.resetForm();
+      // navigate("/");
     }
   });
 
@@ -41,9 +44,7 @@ export default function NovoCadastro() {
     {
       md: 6,
       sm: 12,
-      className: "mb-3",
       controlId: "nome",
-      onChange: formik.handleChange,
       defaultValue: formik.values.nome,
       value: formik.values.nome,
       label: "Nome",
@@ -56,9 +57,7 @@ export default function NovoCadastro() {
     {
       md: 6,
       sm: 12,
-      className: "mb-3",
       controlId: "email",
-      onChange: formik.handleChange,
       defaultValue: formik.values.email,
       value: formik.values.email,
       label: "Email",
@@ -71,9 +70,7 @@ export default function NovoCadastro() {
     {
       md: 4,
       sm: 12,
-      className: "mb-3",
       controlId: "senha",
-      onChange: formik.handleChange,
       defaultValue: formik.values.senha,
       value: formik.values.senha,
       label: "Senha",
@@ -86,9 +83,7 @@ export default function NovoCadastro() {
     {
       md: 4,
       sm: 12,
-      className: "mb-3",
       controlId: "confirmarSenha",
-      onChange: formik.handleChange,
       defaultValue: formik.values.confirmarSenha,
       value: formik.values.confirmarSenha,
       label: "Confirme a senha",
@@ -101,9 +96,7 @@ export default function NovoCadastro() {
     {
       md: 4,
       sm: 12,
-      className: "mb-3",
       controlId: "cpf",
-      onChange: formik.handleChange,
       defaultValue: formik.values.cpf,
       value: formik.values.cpf,
       label: "CPF",
@@ -116,9 +109,7 @@ export default function NovoCadastro() {
     {
       md: 3,
       sm: 12,
-      className: "mb-3",
       controlId: "telefone",
-      onChange: formik.handleChange,
       defaultValue: formik.values.telefone,
       value: formik.values.telefone,
       label: "Telefone",
@@ -131,9 +122,7 @@ export default function NovoCadastro() {
     {
       md: 6,
       sm: 12,
-      className: "mb-3",
       controlId: "rua",
-      onChange: formik.handleChange,
       defaultValue: formik.values.rua,
       value: formik.values.rua,
       label: "Rua",
@@ -146,13 +135,11 @@ export default function NovoCadastro() {
     {
       md: 3,
       sm: 12,
-      className: "mb-3",
       controlId: "numero",
-      onChange: formik.handleChange,
       defaultValue: formik.values.numero,
       value: formik.values.numero,
       label: "Numero",
-      type: "password",
+      type: "number",
       placeholder: "Digite o numero do endereço",
       name: "numero",
       errors: formik.errors.numero,
@@ -161,9 +148,7 @@ export default function NovoCadastro() {
     {
       md: 3,
       sm: 12,
-      className: "mb-3",
       controlId: "complemento",
-      onChange: formik.handleChange,
       defaultValue: formik.values.complemento,
       value: formik.values.complemento,
       label: "Complemento",
@@ -176,9 +161,7 @@ export default function NovoCadastro() {
     {
       md: 6,
       sm: 12,
-      className: "mb-3",
       controlId: "bairro",
-      onChange: formik.handleChange,
       defaultValue: formik.values.bairro,
       value: formik.values.bairro,
       label: "Bairro",
@@ -191,9 +174,7 @@ export default function NovoCadastro() {
     {
       md: 3,
       sm: 12,
-      className: "mb-3",
       controlId: "cep",
-      onChange: formik.handleChange,
       defaultValue: formik.values.cep,
       value: formik.values.cep,
       label: "CEP",
@@ -206,9 +187,7 @@ export default function NovoCadastro() {
     {
       md: 6,
       sm: 12,
-      className: "mb-3",
       controlId: "cidade",
-      onChange: formik.handleChange,
       defaultValue: formik.values.cidade,
       value: formik.values.cidade,
       label: "Cidade",
@@ -235,79 +214,72 @@ export default function NovoCadastro() {
           <Form
             onSubmit={formik.handleSubmit}
           >
-            <Row>
-              {formularioCampos.map((item, index) => (
-                <Col md={item.md}>
-                  <Form.Group
+            {formularioCampos.map((item, index) => (
+              <Form.Group
+                key={index}
+                controlId={item.controlId}
+                onChange={formik.handleChange}
+                defaultValue={item.defaultValue}
+                className="mb-3"
+              >
+                <Form.Label>{item.label}</Form.Label>
+                <Form.Control
+                  type={item.type}
+                  name={item.name}
+                  placeholder={item.placeholder}
+                  // defaultValue={item.defaultValue}
+                  // defaultValue={item.value}
+                  value={item.value}
+                />
+                {item.errors && item.touched ? (
+                  <Form.Text className="text-danger">
+                    {item.errors}
+                  </Form.Text>
+                ) : null}
+              </Form.Group>
+            ))}
+            <Form.Group
+              className="mb-3"
+              controlId="estado"
+              onChange={formik.handleChange}
+              defaultValue={formik.values.estado}
+            >
+              <Form.Label>Estado</Form.Label>
+              <Form.Select
+                aria-label="Estado select"
+                name="estado"
+                value={formik.values.estado}
+              >
+                <option value="">Selecione</option>
+                {estadosDoBrasil.map((item, index) => (
+                  <option
                     key={index}
-                    controlId={item.controlId}
-                    onChange={item.onChange}
-                    defaultValue={item.defaultValue}
-                    className={item.className}
-                  >
-                    <Form.Label>{item.label}</Form.Label>
-                    <Form.Control
-                      type={item.type}
-                      name={item.name}
-                      placeholder={item.placeholder}
-                      // defaultValue={item.defaultValue}
-                      value={item.value}
-                    />
-                    {item.errors && item.touched ? (
-                      <Form.Text className="text-danger">
-                        {item.errors}
-                      </Form.Text>
-                    ) : null}
-                  </Form.Group>
-                </Col>
-              ))}
-              <Col md={6} sm={12} xs={12}>
-                <Form.Group
-                  className="mb-3"
-                  controlId="estado"
-                  onChange={formik.handleChange}
-                  defaultValue={formik.values.estado}
-                >
-                  <Form.Label>Estado</Form.Label>
-                  <Form.Select
-                    aria-label="Estado select"
-                    name="estado"
-                    value={formik.values.estado}
-                  >
-                    <option value="">Selecione</option>
-                    {estadosDoBrasil.map((item, index) => (
-                      <option
-                        key={index}
-                        value={item.value}
-                      >{item.label}</option>
-                    ))}
-                  </Form.Select>
-                  {formik.errors.estado && formik.touched.estado ? (
-                    <Form.Text className="text-danger">
-                      {formik.errors.estado}
-                    </Form.Text>
-                  ) : null}
-                </Form.Group>
-              </Col>
-              <Col sm={12} md={12} xs={12}>
-                <ButtonGroup className="w-100 mt-3">
-                  <Button
-                    variant="primary"
-                    type="submit"
-                  >Salvar</Button>
-                  <Button
-                    variant="danger"
-                    type="button"
-                    onClick={() => formik.resetForm()}
-                  >Limpar</Button>
-                  <Button
-                    variant="success"
-                    type="button"
-                    onClick={() => navigate("/")}
-                  >Voltar</Button>
-                </ButtonGroup>
-              </Col>
-            </Row>
+                    value={item.value}
+                  >{item.label}</option>
+                ))}
+              </Form.Select>
+              {formik.errors.estado && formik.touched.estado ? (
+                <Form.Text className="text-danger">
+                  {formik.errors.estado}
+                </Form.Text>
+              ) : null}
+            </Form.Group>
+            <ButtonGroup className="w-100 mt-3">
+              <Button
+                variant="primary"
+                type="submit"
+              >Salvar</Button>
+              <Button
+                variant="danger"
+                type="button"
+                onClick={() => formik.resetForm()}
+              >Limpar</Button>
+              <Button
+                variant="success"
+                type="button"
+                onClick={() => navigate("/")}
+              >Voltar</Button>
+            </ButtonGroup>
           </Form>
         </Col>
       </Row>

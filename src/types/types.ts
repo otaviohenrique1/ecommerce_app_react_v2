@@ -39,4 +39,16 @@ export type UsuarioContextType = {
   criarUsuario: (usuario: UsuarioTypes) => void;
   editarUsuario: (usuario: UsuarioDataTypes) => void;
   editarUsuarioDaLista: (id: string, usuario: UsuarioDataTypes) => void;
+  loginUsuario: (email: string, senha: string) => {
+    auth_token: string;
+    encontrou: boolean;
+    mensagem: string;
+    status_code: number;
+  };
+  loginUsuario2: (email: string, senha: string) => {
+    auth_token: string;
+    encontrou: boolean;
+    mensagem: string;
+    status_code: number;
+  };
 }

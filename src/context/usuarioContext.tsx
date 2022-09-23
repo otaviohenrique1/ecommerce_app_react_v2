@@ -81,7 +81,54 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
       }
       return item_busca;
     });
-    setUsuarios (resultado);
+    setUsuarios(resultado);
+  };
+
+  const loginUsuario = (email: string, senha: string) => {
+    if (email !== usuario.email) {
+      return {
+        auth_token: "",
+        encontrou: false,
+        mensagem: "Erro, email ou senha não encontrado(s)",
+        status_code: 404
+      };
+    }
+
+    if (senha !== usuario.senha) {
+      return {
+        auth_token: "",
+        encontrou: false,
+        mensagem: "Erro, email ou senha não encontrado(s)",
+        status_code: 404
+      };
+    }
+
+    return {
+      auth_token: `auth_token-${uuidv4().toString()}`,
+      encontrou: true,
+      mensagem: "Login realizado com sucesso!",
+      status_code: 200
+    };
+  };
+
+  const loginUsuario2 = (email: string, senha: string) => {
+    let usuarioLoginBusca = usuarios.find((itemBusca) => {
+      return email === itemBusca.email && senha === itemBusca.senha;
+    });
+    if (usuarioLoginBusca) {
+      return {
+        auth_token: `auth_token-${uuidv4().toString()}`,
+        encontrou: true,
+        mensagem: "Login realizado com sucesso!",
+        status_code: 200
+      };
+    }
+    return {
+      auth_token: "",
+      encontrou: false,
+      mensagem: "Erro, email ou senha não encontrado(s)",
+      status_code: 404
+    };
   };
 
   return (
@@ -93,7 +140,9 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
         setUsuarios,
         criarUsuario,
         editarUsuario,
-        editarUsuarioDaLista
+        editarUsuarioDaLista,
+        loginUsuario,
+        loginUsuario2
       }}
     >{children}</UsuarioContext.Provider>
   );

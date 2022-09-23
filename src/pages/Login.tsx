@@ -1,18 +1,26 @@
-import { useFormik } from 'formik';
+import { FormikHelpers, useFormik } from 'formik';
 import { Col, Container, Form, Row, ButtonGroup } from 'react-bootstrap';
 import Button from 'react-bootstrap/esm/Button';
 import { Flex } from '../components/Flex';
 import { initialValuesFormLogin, validationSchemaFormLogin,  } from '../utils/constants';
 import { useNavigate } from "react-router-dom";
+import { LoginUsuarioDataTypes, UsuarioContextType } from '../types/types';
+import { useContext } from 'react';
+import { UsuarioContext } from '../context/usuarioContext';
 
 export default function Login() {
   const navigate = useNavigate();
 
+  const { loginUsuario } = useContext(UsuarioContext || null) as UsuarioContextType;
+
   const formik = useFormik({
     initialValues: initialValuesFormLogin,
     validationSchema: validationSchemaFormLogin,
-    onSubmit: (values, helpers) => {
-      navigate("/homepage")
+    onSubmit: (values: LoginUsuarioDataTypes, formikHelpers: FormikHelpers<LoginUsuarioDataTypes>) => {
+      let resultado = loginUsuario(values.email, values.senha);
+      console.log(values);
+      console.log(resultado);
+      // navigate("/homepage");
     }
   });
 
@@ -63,7 +71,7 @@ export default function Login() {
               >
                 <Form.Label>Senha</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="password"
                   name="senha"
                   placeholder="Digite a sua senha"
                   // defaultValue={formik.values.senha}
