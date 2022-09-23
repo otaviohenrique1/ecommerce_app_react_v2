@@ -5,15 +5,11 @@ import { Flex } from '../components/Flex';
 import { initialValuesFormUsuario, validationSchemaFormUsuario, } from '../utils/constants';
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { UsuarioContextType, UsuarioDataTypes } from '../types/types';
+import { UsuarioDataTypes } from '../types/types';
 import { estadosDoBrasil } from '../utils/listas';
-import { useContext } from 'react';
-import { UsuarioContext } from '../context/usuarioContext';
 
 export default function NovoCadastro() {
   const navigate = useNavigate();
-
-  const { criarUsuario } = useContext(UsuarioContext || null) as UsuarioContextType;
 
   const formik = useFormik({
     initialValues: initialValuesFormUsuario,
@@ -29,7 +25,6 @@ export default function NovoCadastro() {
   const formularioCampos = [
     {
       controlId: "nome",
-      defaultValue: formik.values.nome,
       value: formik.values.nome,
       label: "Nome",
       type: "text",
@@ -40,7 +35,6 @@ export default function NovoCadastro() {
     },
     {
       controlId: "email",
-      defaultValue: formik.values.email,
       value: formik.values.email,
       label: "Email",
       type: "email",
@@ -51,7 +45,6 @@ export default function NovoCadastro() {
     },
     {
       controlId: "senha",
-      defaultValue: formik.values.senha,
       value: formik.values.senha,
       label: "Senha",
       type: "password",
@@ -62,7 +55,6 @@ export default function NovoCadastro() {
     },
     {
       controlId: "confirmarSenha",
-      defaultValue: formik.values.confirmarSenha,
       value: formik.values.confirmarSenha,
       label: "Confirme a senha",
       type: "password",
@@ -73,7 +65,6 @@ export default function NovoCadastro() {
     },
     {
       controlId: "cpf",
-      defaultValue: formik.values.cpf,
       value: formik.values.cpf,
       label: "CPF",
       type: "text",
@@ -84,7 +75,6 @@ export default function NovoCadastro() {
     },
     {
       controlId: "telefone",
-      defaultValue: formik.values.telefone,
       value: formik.values.telefone,
       label: "Telefone",
       type: "number",
@@ -95,7 +85,6 @@ export default function NovoCadastro() {
     },
     {
       controlId: "rua",
-      defaultValue: formik.values.rua,
       value: formik.values.rua,
       label: "Rua",
       type: "text",
@@ -106,7 +95,6 @@ export default function NovoCadastro() {
     },
     {
       controlId: "numero",
-      defaultValue: formik.values.numero,
       value: formik.values.numero,
       label: "Numero",
       type: "number",
@@ -117,7 +105,6 @@ export default function NovoCadastro() {
     },
     {
       controlId: "complemento",
-      defaultValue: formik.values.complemento,
       value: formik.values.complemento,
       label: "Complemento",
       type: "text",
@@ -128,7 +115,6 @@ export default function NovoCadastro() {
     },
     {
       controlId: "bairro",
-      defaultValue: formik.values.bairro,
       value: formik.values.bairro,
       label: "Bairro",
       type: "text",
@@ -139,7 +125,6 @@ export default function NovoCadastro() {
     },
     {
       controlId: "cep",
-      defaultValue: formik.values.cep,
       value: formik.values.cep,
       label: "CEP",
       type: "number",
@@ -150,7 +135,6 @@ export default function NovoCadastro() {
     },
     {
       controlId: "cidade",
-      defaultValue: formik.values.cidade,
       value: formik.values.cidade,
       label: "Cidade",
       type: "text",
@@ -185,7 +169,7 @@ export default function NovoCadastro() {
                   key={index}
                   controlId={item.controlId}
                   onChange={formik.handleChange}
-                  defaultValue={item.defaultValue}
+                  defaultValue={item.value}
                   className="mb-3"
                 >
                   <Form.Label>{item.label}</Form.Label>
@@ -235,7 +219,7 @@ export default function NovoCadastro() {
                 <Button
                   variant="primary"
                   type="submit"
-                >Entrar</Button>
+                >Salvar</Button>
                 <Button
                   variant="danger"
                   type="button"
@@ -248,6 +232,30 @@ export default function NovoCadastro() {
                 className="w-100"
                 onClick={() => navigate("/")}
               >Voltar</Button>
+              <Button
+                variant="secondary"
+                type="button"
+                className="w-100 mt-2"
+                onClick={() => {
+                  formik.setFieldValue("id", uuidv4().toString());
+                  formik.setFieldValue("nome", "Jeca");
+                  formik.setFieldValue("email", "jeca@email.com");
+                  formik.setFieldValue("usuario", "jeca123");
+                  formik.setFieldValue("senha", "0123456789");
+                  formik.setFieldValue("confirmarSenha", "0123456789");
+                  formik.setFieldValue("cpf", "11111111111");
+                  formik.setFieldValue("telefone", "11111111");
+                  formik.setFieldValue("rua", "Rua do Centro");
+                  formik.setFieldValue("numero", "123");
+                  formik.setFieldValue("complemento", "Casa");
+                  formik.setFieldValue("bairro", "Bairro do Centro");
+                  formik.setFieldValue("cep", "11111111");
+                  formik.setFieldValue("cidade", "Cachoeira");
+                  formik.setFieldValue("estado", "SP");
+                  formik.setFieldValue("dataCadastro", new Date());
+                  formik.setFieldValue("dataEdicao", new Date());
+                }}
+              >Dados</Button>
             </Form>
           </Col>
         </Row>
