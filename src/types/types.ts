@@ -5,8 +5,7 @@ export type LoginUsuarioDataTypes = {
   senha: string;
 }
 
-export type UsuarioDataTypes = { 
-  id: string;
+export type UsuarioTypes = { 
   nome: string;
   email: string;
   usuario: string;
@@ -20,6 +19,10 @@ export type UsuarioDataTypes = {
   cep: string;
   cidade: string;
   estado: string;
+}
+
+export type UsuarioDataTypes = UsuarioTypes & { 
+  id: string;
   dataCadastro: Date;
   dataEdicao: Date;
 }
@@ -33,7 +36,7 @@ export type UsuarioContextType = {
   usuarios: UsuarioDataTypes[];
   setUsuario: (value: SetStateAction<UsuarioDataTypes>) => void;
   setUsuarios: (value: SetStateAction<UsuarioDataTypes[]>) => void;
-  criarUsuario: (usuario: UsuarioDataTypes) => void;
+  criarUsuario: (usuario: UsuarioTypes) => void;
   editarUsuario: (usuario: UsuarioDataTypes) => void;
   editarUsuarioDaLista: (id: string, usuario: UsuarioDataTypes) => void;
 }

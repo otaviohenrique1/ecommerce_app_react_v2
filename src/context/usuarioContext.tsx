@@ -1,6 +1,6 @@
 import { createContext, FC, ReactNode, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { UsuarioContextType, UsuarioDataTypes } from '../types/types';
+import { UsuarioContextType, UsuarioDataTypes, UsuarioTypes } from '../types/types';
 import { initialValuesFormUsuario } from '../utils/constants';
 
 export const UsuarioContext = createContext<UsuarioContextType | null>(null);
@@ -14,7 +14,7 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
 
   const [usuarios, setUsuarios] = useState<UsuarioDataTypes[]>([]);
 
-  const criarUsuario = (usuario: UsuarioDataTypes) => {
+  const criarUsuario = (usuario: UsuarioTypes) => {
     setUsuario({
       id: uuidv4().toString(),
       nome: usuario.nome,
@@ -52,7 +52,7 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
       cidade: usuario.cidade,
       estado: usuario.estado,
       dataCadastro: usuario.dataCadastro,
-      dataEdicao: new Date(),
+      dataEdicao: usuario.dataEdicao,
     })
   };
 

@@ -1,17 +1,38 @@
-import { useFormik } from 'formik';
+import { FormikHelpers, useFormik } from 'formik';
+import { useContext } from 'react';
 import { Button, ButtonGroup, Col, Container, Form, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { Flex } from '../components/Flex';
+import { UsuarioContext } from '../context/usuarioContext';
+import { UsuarioContextType, UsuarioFormTypes } from '../types/types';
 import { initialValuesFormUsuario, validationSchemaFormUsuario } from '../utils/constants';
 import { estadosDoBrasil } from '../utils/listas';
 
 export default function NovoCadastro() {
   const navigate = useNavigate();
 
+  const { criarUsuario } = useContext(UsuarioContext || null) as UsuarioContextType;
+
   const formik = useFormik({
     initialValues: initialValuesFormUsuario,
     validationSchema: validationSchemaFormUsuario,
-    onSubmit: (values, helpers) => {
+    onSubmit: (values: UsuarioFormTypes, helpers: FormikHelpers<UsuarioFormTypes>) => {
+      criarUsuario({
+        nome: values.nome,
+        email: values.email,
+        usuario: values.usuario,
+        senha: values.senha,
+        cpf: values.cpf,
+        telefone: values.telefone,
+        rua: values.rua,
+        numero: values.numero,
+        complemento: values.complemento,
+        bairro: values.bairro,
+        cep: values.cep,
+        cidade: values.cidade,
+        estado: values.estado,
+      });
+      helpers.resetForm();
       navigate("/");
     }
   });
