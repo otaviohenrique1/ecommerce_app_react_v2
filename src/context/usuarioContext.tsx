@@ -1,6 +1,6 @@
 import { createContext, FC, ReactNode, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { UsuarioContextType, UsuarioDataTypes, UsuarioTypes } from '../types/types';
+import { UsuarioContextType, UsuarioDataTypes } from '../types/types';
 import { initialValuesFormUsuario } from '../utils/constants';
 
 export const UsuarioContext = createContext<UsuarioContextType | null>(null);
@@ -14,13 +14,14 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
 
   const [usuarios, setUsuarios] = useState<UsuarioDataTypes[]>([]);
 
-  const criarUsuario = (usuario: UsuarioTypes) => {
+  const criarUsuario = (usuario: UsuarioDataTypes) => {
     setUsuario({
-      id: uuidv4().toString(),
+      id: usuario.id,
       nome: usuario.nome,
       email: usuario.email,
       usuario: usuario.usuario,
       senha: usuario.senha,
+      confirmarSenha: usuario.confirmarSenha,
       cpf: usuario.cpf,
       telefone: usuario.telefone,
       rua: usuario.rua,
@@ -30,8 +31,8 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
       cep: usuario.cep,
       cidade: usuario.cidade,
       estado: usuario.estado,
-      dataCadastro: new Date(),
-      dataEdicao: new Date(),
+      dataCadastro: usuario.dataCadastro,
+      dataEdicao: usuario.dataEdicao,
     })
   };
 
@@ -42,6 +43,7 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
       email: usuario.email,
       usuario: usuario.usuario,
       senha: usuario.senha,
+      confirmarSenha: usuario.confirmarSenha,
       cpf: usuario.cpf,
       telefone: usuario.telefone,
       rua: usuario.rua,

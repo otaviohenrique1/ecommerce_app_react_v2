@@ -1,12 +1,12 @@
 import * as yup from "yup";
-import { LoginUsuarioDataTypes, UsuarioFormTypes } from "../types/types";
+import { LoginUsuarioDataTypes, UsuarioDataTypes } from "../types/types";
 
 export const initialValuesFormLogin: LoginUsuarioDataTypes = {
   email: "",
   senha: "",
 };
 
-export const initialValuesFormUsuario: UsuarioFormTypes = {
+export const initialValuesFormUsuario: UsuarioDataTypes = {
   id: "",
   nome: "",
   email: "",
@@ -23,7 +23,7 @@ export const initialValuesFormUsuario: UsuarioFormTypes = {
   cidade: "",
   estado: "",
   dataCadastro: new Date(),
-  dataEdicao: new Date(),
+  dataEdicao: new Date()
 };
 
 export const validationSchemaFormLogin = yup.object({
@@ -38,6 +38,9 @@ export const validationSchemaFormLogin = yup.object({
 });
 
 export const validationSchemaFormUsuario = yup.object({
+  id: yup
+    .string()
+    .required('Campo id vazio'),
   nome: yup
     .string()
     .required('Campo senha vazio'),
