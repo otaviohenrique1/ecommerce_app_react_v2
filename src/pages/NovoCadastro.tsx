@@ -52,7 +52,9 @@ export default function NovoCadastro() {
         cidade: values.cidade,
         estado: values.estado,
       });
-      console.log(values);
+      formikHelpers.resetForm();
+      navigate("/");
+      // console.log(values);
     }
   });
 
@@ -266,6 +268,27 @@ export default function NovoCadastro() {
                 className="w-100"
                 onClick={() => navigate("/")}
               >Voltar</Button>
+              <Button
+                variant="secondary"
+                type="button"
+                className="w-100 mt-2"
+                onClick={() => {
+                  formik.setFieldValue("nome", "Jeca");
+                  formik.setFieldValue("email", "jeca@email.com");
+                  formik.setFieldValue("usuario", "jeca123");
+                  formik.setFieldValue("senha", "0123456789");
+                  formik.setFieldValue("confirmarSenha", "0123456789");
+                  formik.setFieldValue("cpf", "11111111111");
+                  formik.setFieldValue("telefone", "11111111");
+                  formik.setFieldValue("rua", "Rua do Centro");
+                  formik.setFieldValue("numero", "123");
+                  formik.setFieldValue("complemento", "Casa");
+                  formik.setFieldValue("bairro", "Bairro do Centro");
+                  formik.setFieldValue("cep", "11111111");
+                  formik.setFieldValue("cidade", "Cachoeira");
+                  formik.setFieldValue("estado", "SP");
+                }}
+              >Dados</Button>
             </Form>
           </Col>
         </Row>

@@ -83,19 +83,6 @@ export default function NovoCadastro() {
     {
       md: 4,
       sm: 12,
-      controlId: "confirmarSenha",
-      defaultValue: formik.values.confirmarSenha,
-      value: formik.values.confirmarSenha,
-      label: "Confirme a senha",
-      type: "password",
-      placeholder: "Digite a senha novamente",
-      name: "confirmarSenha",
-      errors: formik.errors.confirmarSenha,
-      touched: formik.touched.confirmarSenha
-    },
-    {
-      md: 4,
-      sm: 12,
       controlId: "cpf",
       defaultValue: formik.values.cpf,
       value: formik.values.cpf,

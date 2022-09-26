@@ -11,7 +11,6 @@ export type UsuarioDataTypes = {
   email: string;
   usuario: string;
   senha: string;
-  // confirmarSenha: string;
   cpf: string;
   telefone: string;
   rua: string;
@@ -53,7 +52,6 @@ export type UsuarioBase = {
   email: string;
   usuario: string;
   senha: string;
-  // confirmarSenha: string;
   cpf: string;
   telefone: string;
   rua: string;
