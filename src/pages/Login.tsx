@@ -7,9 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { LoginUsuarioDataTypes, UsuarioContextType } from '../types/types';
 import { useContext } from 'react';
 import { UsuarioContext } from '../context/usuarioContext';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 export default function Login() {
   const navigate = useNavigate();
+  const SwalModal = withReactContent(Swal);
 
   const { loginUsuario } = useContext(UsuarioContext || null) as UsuarioContextType;
 
@@ -18,9 +21,21 @@ export default function Login() {
     validationSchema: validationSchemaFormLogin,
     onSubmit: (values: LoginUsuarioDataTypes, formikHelpers: FormikHelpers<LoginUsuarioDataTypes>) => {
       let resultado = loginUsuario(values.email, values.senha);
-      console.log(values);
-      console.log(resultado);
-      // navigate("/homepage");
+      if (!resultado.encontrou) {
+        return SwalModal.fire({
+          title: "Erro",
+          icon: "error",
+          html: <p>{resultado.mensagem}</p>,
+          confirmButtonText: "Fechar",
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: "btn btn-danger"
+          }
+        });
+      }
+      navigate("/homepage");
+      // console.log(values);
+      // console.log(resultado);
     }
   });
 

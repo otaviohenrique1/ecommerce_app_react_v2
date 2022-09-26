@@ -1,10 +1,17 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
+import { Col, Container, Row } from 'react-bootstrap'
 
 export default function Homepage() {
   return (
     <Container>
-      <h1>Homepage</h1>
+      <Row>
+        <Col sm={12}>
+          <h1>Homepage</h1>
+        </Col>
+        <Col sm={12}>
+          
+        </Col>
+      </Row>
     </Container>
   )
 }

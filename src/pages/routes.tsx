@@ -10,7 +10,7 @@ export default function AppRoutes() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/novo_cadastro" element={<NovoCadastro />} />
-        <Route path="/" element={<Homepage />} />
+        <Route path="/homepage" element={<Homepage />} />
       </Routes>
     </BrowserRouter>
   )

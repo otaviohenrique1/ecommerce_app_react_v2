@@ -68,3 +68,12 @@ export type UsuarioData = UsuarioBase & {
   dataCadastro: Date;
   dataEdicao: Date;
 }
+
+export interface ListaProdutoTypes {
+  codigo: number;
+  nome: string;
+  preco: number;
+  quantidade: number;
+  tipo: string;
+  marca: string;
+}
