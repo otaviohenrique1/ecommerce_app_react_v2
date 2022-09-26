@@ -2,22 +2,56 @@ import { FormikHelpers, useFormik } from 'formik';
 import { Col, Container, Form, Row, ButtonGroup } from 'react-bootstrap';
 import Button from 'react-bootstrap/esm/Button';
 import { Flex } from '../components/Flex';
-import { initialValuesFormUsuario, validationSchemaFormUsuario, } from '../utils/constants';
+import { validaBairro, validaCEP, validaCidade, validaComplemento, validaConfirmarSenha, validaCPF, validaEmail, validaEstado, validaNome, validaNumero, validaRua, validaSenha, validaUsuario, } from '../utils/constants';
 import { useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
-import { UsuarioDataTypes } from '../types/types';
+import { UsuarioBase, UsuarioContextType } from '../types/types';
 import { estadosDoBrasil } from '../utils/listas';
+import { useContext } from 'react';
+import { UsuarioContext } from '../context/usuarioContext';
+import * as yup from "yup";
+
+type UsuarioForm = UsuarioBase & { 
+  confirmarSenha: string;
+}
+
+const initialValuesUsuarioForm: UsuarioForm = {
+  nome: "", email: "", usuario: "", senha: "", confirmarSenha: "", cpf: "",
+  telefone: "", rua: "", numero: "", complemento: "", bairro: "", cep: "",
+  cidade: "", estado: ""
+};
+
+const validationSchemaUsuarioForm = yup.object({
+  nome: validaNome, email: validaEmail, usuario: validaUsuario,
+  senha: validaSenha, confirmarSenha: validaConfirmarSenha,
+  cpf: validaCPF, rua: validaRua, numero: validaNumero,
+  complemento: validaComplemento, bairro: validaBairro,
+  cep: validaCEP, cidade: validaCidade, estado: validaEstado,
+});
 
 export default function NovoCadastro() {
   const navigate = useNavigate();
+  
+  const { criarUsuario2 } = useContext(UsuarioContext || null) as UsuarioContextType;
 
   const formik = useFormik({
-    initialValues: initialValuesFormUsuario,
-    validationSchema: validationSchemaFormUsuario,
-    onSubmit: (values: UsuarioDataTypes, formikHelpers: FormikHelpers<UsuarioDataTypes>) => {
-      // formikHelpers.setFieldValue("id", uuidv4().toString());
-      // formikHelpers.setFieldValue("dataCadastro", new Date());
-      // formikHelpers.setFieldValue("dataEdicao", new Date());
+    initialValues: initialValuesUsuarioForm,
+    validationSchema: validationSchemaUsuarioForm,
+    onSubmit: (values: UsuarioForm, formikHelpers: FormikHelpers<UsuarioForm>) => {
+      criarUsuario2({
+        nome: values.nome,
+        email: values.email,
+        usuario: values.usuario,
+        senha: values.senha,
+        cpf: values.cpf,
+        telefone: values.telefone,
+        rua: values.rua,
+        numero: values.numero,
+        complemento: values.complemento,
+        bairro: values.bairro,
+        cep: values.cep,
+        cidade: values.cidade,
+        estado: values.estado,
+      });
       console.log(values);
     }
   });
@@ -232,30 +266,6 @@ export default function NovoCadastro() {
                 className="w-100"
                 onClick={() => navigate("/")}
               >Voltar</Button>
-              <Button
-                variant="secondary"
-                type="button"
-                className="w-100 mt-2"
-                onClick={() => {
-                  formik.setFieldValue("id", uuidv4().toString());
-                  formik.setFieldValue("nome", "Jeca");
-                  formik.setFieldValue("email", "jeca@email.com");
-                  formik.setFieldValue("usuario", "jeca123");
-                  formik.setFieldValue("senha", "0123456789");
-                  formik.setFieldValue("confirmarSenha", "0123456789");
-                  formik.setFieldValue("cpf", "11111111111");
-                  formik.setFieldValue("telefone", "11111111");
-                  formik.setFieldValue("rua", "Rua do Centro");
-                  formik.setFieldValue("numero", "123");
-                  formik.setFieldValue("complemento", "Casa");
-                  formik.setFieldValue("bairro", "Bairro do Centro");
-                  formik.setFieldValue("cep", "11111111");
-                  formik.setFieldValue("cidade", "Cachoeira");
-                  formik.setFieldValue("estado", "SP");
-                  formik.setFieldValue("dataCadastro", new Date());
-                  formik.setFieldValue("dataEdicao", new Date());
-                }}
-              >Dados</Button>
             </Form>
           </Col>
         </Row>

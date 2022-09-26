@@ -1,6 +1,6 @@
 import { createContext, FC, ReactNode, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { UsuarioContextType, UsuarioDataTypes } from '../types/types';
+import { UsuarioBase, UsuarioContextType, UsuarioDataTypes } from '../types/types';
 import { initialValuesFormUsuario } from '../utils/constants';
 
 export const UsuarioContext = createContext<UsuarioContextType | null>(null);
@@ -11,7 +11,6 @@ export type UsuarioProviderProps = {
 
 export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
   const [usuario, setUsuario] = useState<UsuarioDataTypes>(initialValuesFormUsuario);
-
   const [usuarios, setUsuarios] = useState<UsuarioDataTypes[]>([]);
 
   const criarUsuario = (usuario: UsuarioDataTypes) => {
@@ -21,7 +20,7 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
       email: usuario.email,
       usuario: usuario.usuario,
       senha: usuario.senha,
-      confirmarSenha: usuario.confirmarSenha,
+      // confirmarSenha: usuario.confirmarSenha,
       cpf: usuario.cpf,
       telefone: usuario.telefone,
       rua: usuario.rua,
@@ -43,7 +42,7 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
       email: usuario.email,
       usuario: usuario.usuario,
       senha: usuario.senha,
-      confirmarSenha: usuario.confirmarSenha,
+      // confirmarSenha: usuario.confirmarSenha,
       cpf: usuario.cpf,
       telefone: usuario.telefone,
       rua: usuario.rua,
@@ -133,6 +132,28 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
     };
   };
 
+  const criarUsuario2 = (usuario: UsuarioBase) => {
+    setUsuario({
+      id: uuidv4().toString(),
+      nome: usuario.nome,
+      email: usuario.email,
+      usuario: usuario.usuario,
+      senha: usuario.senha,
+      // confirmarSenha: usuario.confirmarSenha,
+      cpf: usuario.cpf,
+      telefone: usuario.telefone,
+      rua: usuario.rua,
+      numero: usuario.numero,
+      complemento: usuario.complemento,
+      bairro: usuario.bairro,
+      cep: usuario.cep,
+      cidade: usuario.cidade,
+      estado: usuario.estado,
+      dataCadastro: new Date(),
+      dataEdicao: new Date(),
+    })
+  };
+
   return (
     <UsuarioContext.Provider
       value={{
@@ -144,7 +165,8 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
         editarUsuario,
         editarUsuarioDaLista,
         loginUsuario,
-        loginUsuario2
+        loginUsuario2,
+        criarUsuario2
       }}
     >{children}</UsuarioContext.Provider>
   );

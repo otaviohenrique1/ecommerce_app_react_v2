@@ -11,7 +11,7 @@ export type UsuarioDataTypes = {
   email: string;
   usuario: string;
   senha: string;
-  confirmarSenha: string;
+  // confirmarSenha: string;
   cpf: string;
   telefone: string;
   rua: string;
@@ -45,4 +45,28 @@ export type UsuarioContextType = {
     mensagem: string;
     status_code: number;
   };
+  criarUsuario2: (usuario: UsuarioBase) => void;
+}
+
+export type UsuarioBase = {
+  nome: string;
+  email: string;
+  usuario: string;
+  senha: string;
+  // confirmarSenha: string;
+  cpf: string;
+  telefone: string;
+  rua: string;
+  numero: string;
+  complemento: string;
+  bairro: string;
+  cep: string;
+  cidade: string;
+  estado: string;
+}
+
+export type UsuarioData = UsuarioBase & { 
+  id: string;
+  dataCadastro: Date;
+  dataEdicao: Date;
 }
