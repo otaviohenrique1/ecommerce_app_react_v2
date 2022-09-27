@@ -10,7 +10,7 @@ export default function ContainerApp(props: ContainerAppProps) {
   return (
     <>
       <Appbar />
-      <Container className="py-4">
+      <Container className="py-4" /* fluid */>
         {props.children}
       </Container>
     </>

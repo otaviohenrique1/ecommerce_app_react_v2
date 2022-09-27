@@ -1,27 +1,27 @@
 import { FormikHelpers, useFormik } from 'formik';
-import { Col, Container, Form, Row, ButtonGroup } from 'react-bootstrap';
+import { Col, Form, Row, ButtonGroup } from 'react-bootstrap';
 import Button from 'react-bootstrap/esm/Button';
 import { Flex } from '../components/Flex';
-import { validaBairro, validaCEP, validaCidade, validaComplemento, validaConfirmarSenha, validaCPF, validaDataCadastro, validaDataEdicao, validaEmail, validaEstado, validaId, validaNome, validaNumero, validaRua, validaSenha, validaUsuario, } from '../utils/constants';
+import { validaBairro, validaCEP, validaCidade, validaComplemento, validaConfirmarSenha, validaCPF, validaEmail, validaEstado, validaNome, validaNumero, validaRua, validaSenha, validaUsuario, } from '../utils/constants';
 import { useNavigate } from "react-router-dom";
 import { UsuarioBase, UsuarioContextType } from '../types/types';
 import { estadosDoBrasil } from '../utils/listas';
 import { useContext } from 'react';
 import { UsuarioContext } from '../context/usuarioContext';
 import * as yup from "yup";
+import ContainerApp from '../components/ContainerApp';
 
 type UsuarioForm = UsuarioBase & { 
   confirmarSenha: string;
 }
 
 const validationSchemaUsuarioForm = yup.object({
-  id: validaId, nome: validaNome, email: validaEmail,
+  nome: validaNome, email: validaEmail,
   usuario: validaUsuario, senha: validaSenha,
   confirmarSenha: validaConfirmarSenha, cpf: validaCPF,
   rua: validaRua, numero: validaNumero, complemento: validaComplemento,
   bairro: validaBairro, cep: validaCEP, cidade: validaCidade,
-  estado: validaEstado, dataCadastro: validaDataCadastro,
-  dataEdicao: validaDataEdicao
+  estado: validaEstado
 });
 
 export default function PerfilEdicao() {
@@ -34,7 +34,7 @@ export default function PerfilEdicao() {
     email: "" || usuario.email,
     usuario: "" || usuario.usuario,
     senha: "" || usuario.senha,
-    confirmarSenha: "",
+    confirmarSenha: "" || usuario.senha,
     cpf: "" || usuario.cpf,
     telefone: "" || usuario.telefone,
     rua: "" || usuario.rua,
@@ -69,7 +69,6 @@ export default function PerfilEdicao() {
         dataEdicao: new Date(),
       });
       navigate("/perfil");
-      // console.log(values);
     }
   });
 
@@ -197,7 +196,7 @@ export default function PerfilEdicao() {
   ];
 
   return (
-    <Container fluid className="my-5">
+    <ContainerApp>
       <Flex
         flexDirection="column"
         alignItems="center"
@@ -210,7 +209,7 @@ export default function PerfilEdicao() {
               alignItems="center"
               justifyContent="center"
             >
-              <h1 className="text-center">Novo Cadastro</h1>
+              <h1 className="text-center">Perfil Edição</h1>
             </Flex>
           </Col>
           <Col sm={12}>
@@ -277,37 +276,10 @@ export default function PerfilEdicao() {
                   onClick={() => formik.resetForm()}
                 >Limpar</Button>
               </ButtonGroup>
-              <Button
-                variant="success"
-                type="button"
-                className="w-100"
-                onClick={() => navigate("/")}
-              >Voltar</Button>
-              <Button
-                variant="secondary"
-                type="button"
-                className="w-100 mt-2"
-                onClick={() => {
-                  formik.setFieldValue("nome", "Jeca");
-                  formik.setFieldValue("email", "jeca@email.com");
-                  formik.setFieldValue("usuario", "jeca123");
-                  formik.setFieldValue("senha", "0123456789");
-                  formik.setFieldValue("confirmarSenha", "0123456789");
-                  formik.setFieldValue("cpf", "11111111111");
-                  formik.setFieldValue("telefone", "11111111");
-                  formik.setFieldValue("rua", "Rua do Centro");
-                  formik.setFieldValue("numero", "123");
-                  formik.setFieldValue("complemento", "Casa");
-                  formik.setFieldValue("bairro", "Bairro do Centro");
-                  formik.setFieldValue("cep", "11111111");
-                  formik.setFieldValue("cidade", "Cachoeira");
-                  formik.setFieldValue("estado", "SP");
-                }}
-              >Dados</Button>
             </Form>
           </Col>
         </Row>
       </Flex>
-    </Container>
+    </ContainerApp>
   );
 }
