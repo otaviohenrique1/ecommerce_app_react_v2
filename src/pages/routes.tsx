@@ -1,13 +1,13 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Carrinho from './Carrinho'
-import Favoritos from './Favoritos'
-import Historico from './Historico'
-import Homepage from './Homepage'
-import Login from './Login'
-import NovoCadastro from './NovoCadastro'
-import Perfil from './Perfil'
-import PerfilEdicao from './PerfilEdicao'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Carrinho from './Carrinho';
+import Favoritos from './Favoritos';
+import Historico from './Historico';
+import Homepage from './Homepage';
+import Login from './Login';
+import NovoCadastro from './NovoCadastro';
+import Perfil from './Perfil';
+import PerfilEdicao from './PerfilEdicao';
+import Produto from './Produto';
 
 export default function AppRoutes() {
   return (
@@ -21,7 +21,8 @@ export default function AppRoutes() {
         <Route path="/favoritos" element={<Favoritos />} />
         <Route path="/historico" element={<Historico />} />
         <Route path="/carrinho" element={<Carrinho />} />
+        <Route path="/produto/:id" element={<Produto />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }

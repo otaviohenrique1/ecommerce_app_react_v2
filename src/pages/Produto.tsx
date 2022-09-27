@@ -8,7 +8,7 @@ import { UsuarioContextType } from '../types/types';
 import { FormataData } from '../utils/Formatador';
 import { ItemLista } from '../components/ItemLista';
 
-export default function Perfil() {
+export default function Produto() {
   const navigate = useNavigate();
   const { usuario } = useContext(UsuarioContext || null) as UsuarioContextType;
 
@@ -16,7 +16,7 @@ export default function Perfil() {
     <ContainerApp>
       <Row>
         <Col sm={12}>
-          <h1 className="mt-3 mb-5 text-center">Perfil</h1>
+          <h1 className="mt-3 mb-5 text-center">Produto</h1>
         </Col>
         <Col sm={12}>
           <ListGroup>
@@ -53,5 +53,3 @@ export default function Perfil() {
     </ContainerApp>
   );
 }
-
-
