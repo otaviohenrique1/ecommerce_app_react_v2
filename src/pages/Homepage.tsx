@@ -39,6 +39,12 @@ export default function Homepage() {
                       <Button
                         variant="primary"
                         size="sm"
+                        onClick={() => adicionarCarrinho({
+                          codigo: item.codigo,
+                          nome: item.nome,
+                          preco: item.preco,
+                          quantidade: item.quantidade,
+                        })}
                       >Adicionar ao carrinho</Button>
                     </Flex>
                   </Flex>
