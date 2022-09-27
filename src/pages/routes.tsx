@@ -21,7 +21,7 @@ export default function AppRoutes() {
         <Route path="/favoritos" element={<Favoritos />} />
         <Route path="/historico" element={<Historico />} />
         <Route path="/carrinho" element={<Carrinho />} />
-        <Route path="/produto/:id" element={<Produto />} />
+        <Route path="/produto/:codigo" element={<Produto />} />
       </Routes>
     </BrowserRouter>
   );

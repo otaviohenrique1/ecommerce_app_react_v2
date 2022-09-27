@@ -1,16 +1,39 @@
-import { useContext } from 'react';
+import { useEffect, useState/*, useContext */ } from 'react';
 import { Button, Col, ListGroup, Row } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { /* useNavigate, */ useParams } from 'react-router-dom';
 import ContainerApp from '../components/ContainerApp';
 import { Flex } from '../components/Flex';
-import { UsuarioContext } from '../context/usuarioContext';
-import { UsuarioContextType } from '../types/types';
-import { FormataData } from '../utils/Formatador';
+// import { UsuarioContext } from '../context/usuarioContext';
+// import { UsuarioContextType } from '../types/types';
 import { ItemLista } from '../components/ItemLista';
+import { ListaProdutoTypes } from '../types/types';
+import { FormatadorMoeda } from '../utils/Formatador';
+import { listaProdutos } from '../utils/listas';
+
+const initialValues: ListaProdutoTypes = {
+  codigo: 0,
+  nome: '',
+  preco: 0,
+  quantidade: 0,
+  tipo: '',
+  marca: ''
+};
 
 export default function Produto() {
-  const navigate = useNavigate();
-  const { usuario } = useContext(UsuarioContext || null) as UsuarioContextType;
+  // const navigate = useNavigate();
+  // const { usuario } = useContext(UsuarioContext || null) as UsuarioContextType;
+
+  const { codigo } = useParams();
+
+  const [data, setData] = useState<ListaProdutoTypes>(initialValues);
+
+  useEffect(() => {
+    let validaCodigoUrlParam = (codigo) ? Number(codigo) : 1;
+    let resultado = listaProdutos.find((itemBusca) => {
+      return itemBusca.codigo === validaCodigoUrlParam;
+    });
+    setData(resultado || initialValues);
+  }, [codigo]);
 
   return (
     <ContainerApp>
@@ -20,22 +43,12 @@ export default function Produto() {
         </Col>
         <Col sm={12}>
           <ListGroup>
-            <ItemLista label="ID:" valor={usuario.id} />
-            <ItemLista label="Nome:" valor={usuario.nome} />
-            <ItemLista label="E-mail:" valor={usuario.email} />
-            <ItemLista label="Usuario:" valor={usuario.usuario} />
-            <ItemLista label="Senha:" valor={usuario.senha} />
-            <ItemLista label="CPF:" valor={usuario.cpf} />
-            <ItemLista label="Telefone:" valor={usuario.telefone} />
-            <ItemLista label="Rua:" valor={usuario.rua} />
-            <ItemLista label="Numero:" valor={usuario.numero} />
-            <ItemLista label="Complemento:" valor={usuario.complemento} />
-            <ItemLista label="Bairro:" valor={usuario.bairro} />
-            <ItemLista label="CEP:" valor={usuario.cep} />
-            <ItemLista label="Cidade:" valor={usuario.cidade} />
-            <ItemLista label="Estado:" valor={usuario.estado} />
-            <ItemLista label="Cadastro em:" valor={FormataData(usuario.dataCadastro)} />
-            <ItemLista label="Editado em:" valor={FormataData(usuario.dataEdicao)} />
+            <ItemLista label="codigo:" valor={String(data.codigo)} />
+            <ItemLista label="nome:" valor={data.nome} />
+            <ItemLista label="preco:" valor={FormatadorMoeda(data.preco)} />
+            <ItemLista label="quantidade:" valor={String(data.quantidade)} />
+            <ItemLista label="tipo:" valor={data.tipo} />
+            <ItemLista label="marca:" valor={data.marca} />
           </ListGroup>
         </Col>
         <Col sm={12} className="pt-2">
@@ -45,8 +58,8 @@ export default function Produto() {
           >
             <Button
               variant="primary"
-              onClick={() => navigate("/perfil_edicao")}
-            >Editar</Button>
+              // onClick={() => navigate("/perfil_edicao")}
+            >Adicionar ao carrinho</Button>
           </Flex>
         </Col>
       </Row>
