@@ -276,8 +276,8 @@ export default function NovoCadastro() {
                   formik.setFieldValue("nome", "Jeca");
                   formik.setFieldValue("email", "jeca@email.com");
                   formik.setFieldValue("usuario", "jeca123");
-                  formik.setFieldValue("senha", "0123456789");
-                  formik.setFieldValue("confirmarSenha", "0123456789");
+                  formik.setFieldValue("senha", "jeca1234");
+                  formik.setFieldValue("confirmarSenha", "jeca1234");
                   formik.setFieldValue("cpf", "11111111111");
                   formik.setFieldValue("telefone", "11111111");
                   formik.setFieldValue("rua", "Rua do Centro");

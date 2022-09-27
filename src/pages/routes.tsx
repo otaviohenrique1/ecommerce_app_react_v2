@@ -5,6 +5,7 @@ import Historico from './Historico';
 import Homepage from './Homepage';
 import Login from './Login';
 import NovoCadastro from './NovoCadastro';
+import Pagamento from './Pagamento';
 import Perfil from './Perfil';
 import PerfilEdicao from './PerfilEdicao';
 import ProdutoDados from './ProdutoDados';
@@ -22,6 +23,7 @@ export default function AppRoutes() {
         <Route path="/historico" element={<Historico />} />
         <Route path="/carrinho" element={<Carrinho />} />
         <Route path="/produto/:codigo" element={<ProdutoDados />} />
+        <Route path="/pagamento" element={<Pagamento />} />
       </Routes>
     </BrowserRouter>
   );

@@ -153,6 +153,14 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
   };
 
   const adicionarCarrinho = (produto: CarrinhoCompras) => {
+    let resultado = carrinhoProdutos.find((item) => {
+      return item.codigo === produto.codigo;
+    });
+
+    if (resultado) {
+      return;
+    }
+
     setCarrinhoProdutos([...carrinhoProdutos, produto]);
   };
 

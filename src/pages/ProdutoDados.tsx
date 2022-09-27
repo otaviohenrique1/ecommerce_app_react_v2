@@ -56,14 +56,6 @@ export default function ProdutoDados() {
             <Button
               variant="primary"
               onClick={() => {
-                let resultado = carrinhoProdutos.find((item) => {
-                  return item.codigo !== data.codigo;
-                });
-
-                if (resultado) {
-                  return;
-                }
-
                 adicionarCarrinho({
                   codigo: data.codigo,
                   nome: data.nome,

@@ -1,10 +1,15 @@
+import { useContext } from 'react';
 import { Button, Col, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
 import ContainerApp from '../components/ContainerApp';
 import { Flex } from '../components/Flex';
+import { UsuarioContext } from '../context/usuarioContext';
+import { UsuarioContextType } from '../types/types';
 import { FormatadorMoeda } from '../utils/Formatador';
 import { listaProdutos } from '../utils/listas'
 
 export default function Homepage() {
+  const { adicionarCarrinho } = useContext(UsuarioContext || null) as UsuarioContextType;
+
   return (
     <ContainerApp>
       <Row>
