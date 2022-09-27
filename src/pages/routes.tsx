@@ -7,7 +7,7 @@ import Login from './Login';
 import NovoCadastro from './NovoCadastro';
 import Perfil from './Perfil';
 import PerfilEdicao from './PerfilEdicao';
-import Produto from './Produto';
+import ProdutoDados from './ProdutoDados';
 
 export default function AppRoutes() {
   return (
@@ -21,7 +21,7 @@ export default function AppRoutes() {
         <Route path="/favoritos" element={<Favoritos />} />
         <Route path="/historico" element={<Historico />} />
         <Route path="/carrinho" element={<Carrinho />} />
-        <Route path="/produto/:codigo" element={<Produto />} />
+        <Route path="/produto/:codigo" element={<ProdutoDados />} />
       </Routes>
     </BrowserRouter>
   );

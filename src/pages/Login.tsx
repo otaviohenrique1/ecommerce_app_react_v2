@@ -2,7 +2,7 @@ import { FormikHelpers, useFormik } from 'formik';
 import { Col, Container, Form, Row, ButtonGroup } from 'react-bootstrap';
 import Button from 'react-bootstrap/esm/Button';
 import { Flex } from '../components/Flex';
-import { initialValuesFormLogin, validationSchemaFormLogin,  } from '../utils/constants';
+import { initialValuesFormLogin, validationSchemaFormLogin, } from '../utils/constants';
 import { useNavigate } from "react-router-dom";
 import { LoginUsuarioDataTypes, UsuarioContextType } from '../types/types';
 import { useContext } from 'react';
@@ -39,6 +39,19 @@ export default function Login() {
     }
   });
 
+  const formularioCampos = [
+    {
+      controlId: "email", value: formik.values.email, label: "Email",
+      type: "email", placeholder: "Digite o email", name: "email",
+      errors: formik.errors.email, touched: formik.touched.email
+    },
+    {
+      controlId: "senha", value: formik.values.senha, label: "Senha",
+      type: "password", placeholder: "Digite a senha", name: "senha",
+      errors: formik.errors.senha, touched: formik.touched.senha
+    },
+  ];
+
   return (
     <Container fluid className="my-5">
       <Flex
@@ -58,46 +71,30 @@ export default function Login() {
           </Col>
           <Col sm={12}>
             <Form onSubmit={formik.handleSubmit}>
-              <Form.Group
-                controlId="email"
-                onChange={formik.handleChange}
-                defaultValue={formik.values.email}
-                className="mb-3"
-              >
-                <Form.Label>E-mail</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="email"
-                  placeholder="Digite o seu e-mail"
-                  // defaultValue={formik.values.email}
-                  value={formik.values.email}
-                />
-                {formik.errors.email && formik.touched.email ? (
-                  <Form.Text className="text-danger">
-                    {formik.errors.email}
-                  </Form.Text>
-                ) : null}
-              </Form.Group>
-              <Form.Group
-                controlId="senha"
-                onChange={formik.handleChange}
-                defaultValue={formik.values.senha}
-                className="mb-3"
-              >
-                <Form.Label>Senha</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="senha"
-                  placeholder="Digite a sua senha"
-                  // defaultValue={formik.values.senha}
-                  value={formik.values.senha}
-                />
-                {formik.errors.senha && formik.touched.senha ? (
-                  <Form.Text className="text-danger">
-                    {formik.errors.senha}
-                  </Form.Text>
-                ) : null}
-              </Form.Group>
+              {formularioCampos.map((item, index) => (
+                <Form.Group
+                  key={index}
+                  controlId={item.controlId}
+                  onChange={formik.handleChange}
+                  defaultValue={item.value}
+                  className="mb-3"
+                >
+                  <Form.Label>{item.label}</Form.Label>
+                  <Form.Control
+                    type={item.type}
+                    name={item.name}
+                    placeholder={item.placeholder}
+                    // defaultValue={item.defaultValue}
+                    defaultValue={item.value}
+                    value={item.value}
+                  />
+                  {item.errors && item.touched ? (
+                    <Form.Text className="text-danger">
+                      {item.errors}
+                    </Form.Text>
+                  ) : null}
+                </Form.Group>
+              ))}
               <Form.Group
                 className="mb-3"
                 controlId="manter_conectado"

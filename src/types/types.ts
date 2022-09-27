@@ -45,6 +45,11 @@ export type UsuarioContextType = {
     status_code: number;
   };
   criarUsuario2: (usuario: UsuarioBase) => void;
+  adicionarCarrinho: (produto: Produto) => void;
+  editarCarrinho: (produto: Produto) => void;
+  removerCarrinho: (produto: Produto) => void;
+  carrinhoProdutos: Produto[];
+  setCarrinhoProdutos: (value: SetStateAction<Produto[]>) => void;
 }
 
 export type UsuarioBase = {
@@ -69,7 +74,18 @@ export type UsuarioData = UsuarioBase & {
   dataEdicao: Date;
 }
 
-export interface ListaProdutoTypes {
+export type UsuarioForm = UsuarioBase & { 
+  confirmarSenha: string;
+}
+
+export type CarrinhoCompras = { 
+  codigo: number;
+  nome: string;
+  preco: number;
+  quantidade: number;
+}
+
+export interface Produto {
   codigo: number;
   nome: string;
   preco: number;

@@ -1,4 +1,4 @@
-import { ListaProdutoTypes } from "../types/types";
+import { Produto } from "../types/types";
 
 export const estadosDoBrasil = [
   { label: "Acre", value: "AC" },
@@ -30,7 +30,7 @@ export const estadosDoBrasil = [
   { label: "Tocantins", value: "TO" },
 ];
 
-export const listaProdutos: ListaProdutoTypes[] = [
+export const listaProdutos: Produto[] = [
   {
     codigo: 1,
     nome: "GTX 750",

@@ -6,11 +6,11 @@ import { Flex } from '../components/Flex';
 // import { UsuarioContext } from '../context/usuarioContext';
 // import { UsuarioContextType } from '../types/types';
 import { ItemLista } from '../components/ItemLista';
-import { ListaProdutoTypes } from '../types/types';
+import { Produto } from '../types/types';
 import { FormatadorMoeda } from '../utils/Formatador';
 import { listaProdutos } from '../utils/listas';
 
-const initialValues: ListaProdutoTypes = {
+const initialValues: Produto = {
   codigo: 0,
   nome: '',
   preco: 0,
@@ -19,13 +19,13 @@ const initialValues: ListaProdutoTypes = {
   marca: ''
 };
 
-export default function Produto() {
+export default function ProdutoDados() {
   // const navigate = useNavigate();
   // const { usuario } = useContext(UsuarioContext || null) as UsuarioContextType;
 
   const { codigo } = useParams();
 
-  const [data, setData] = useState<ListaProdutoTypes>(initialValues);
+  const [data, setData] = useState<Produto>(initialValues);
 
   useEffect(() => {
     let validaCodigoUrlParam = (codigo) ? Number(codigo) : 1;
