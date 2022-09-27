@@ -21,7 +21,7 @@ const initialValues: Produto = {
 
 export default function ProdutoDados() {
   const navigate = useNavigate();
-  const { adicionarCarrinho, carrinhoProdutos } = useContext(UsuarioContext || null) as UsuarioContextType;
+  const { adicionarCarrinho } = useContext(UsuarioContext || null) as UsuarioContextType;
 
   const { codigo } = useParams();
 
