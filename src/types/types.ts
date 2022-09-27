@@ -45,11 +45,11 @@ export type UsuarioContextType = {
     status_code: number;
   };
   criarUsuario2: (usuario: UsuarioBase) => void;
-  adicionarCarrinho: (produto: Produto) => void;
-  editarCarrinho: (produto: Produto) => void;
-  removerCarrinho: (produto: Produto) => void;
-  carrinhoProdutos: Produto[];
-  setCarrinhoProdutos: (value: SetStateAction<Produto[]>) => void;
+  adicionarCarrinho: (produto: CarrinhoCompras) => void;
+  editarCarrinho: (codigo: string, produto: CarrinhoCompras) => void;
+  removerCarrinho: (codigo: string) => void;
+  carrinhoProdutos: CarrinhoCompras[];
+  setCarrinhoProdutos: (value: SetStateAction<CarrinhoCompras[]>) => void;
 }
 
 export type UsuarioBase = {
@@ -79,14 +79,14 @@ export type UsuarioForm = UsuarioBase & {
 }
 
 export type CarrinhoCompras = { 
-  codigo: number;
+  codigo: string;
   nome: string;
   preco: number;
   quantidade: number;
 }
 
 export interface Produto {
-  codigo: number;
+  codigo: string;
   nome: string;
   preco: number;
   quantidade: number;

@@ -1,6 +1,6 @@
 import { createContext, FC, ReactNode, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { UsuarioBase, UsuarioContextType, UsuarioDataTypes } from '../types/types';
+import { CarrinhoCompras, UsuarioBase, UsuarioContextType, UsuarioDataTypes } from '../types/types';
 import { initialValuesFormUsuario } from '../utils/constants';
 
 export const UsuarioContext = createContext<UsuarioContextType | null>(null);
@@ -12,6 +12,7 @@ export type UsuarioProviderProps = {
 export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
   const [usuario, setUsuario] = useState<UsuarioDataTypes>(initialValuesFormUsuario);
   const [usuarios, setUsuarios] = useState<UsuarioDataTypes[]>([]);
+  const [carrinhoProdutos, setCarrinhoProdutos] = useState<CarrinhoCompras[]>([]);
 
   const criarUsuario = (usuario: UsuarioDataTypes) => {
     setUsuario({
@@ -151,6 +152,33 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
     })
   };
 
+  const adicionarCarrinho = (produto: CarrinhoCompras) => {
+    setCarrinhoProdutos([...carrinhoProdutos, produto]);
+  };
+
+  const editarCarrinho = (codigo: string, produto: CarrinhoCompras) => {
+    let resultado = carrinhoProdutos.map((item) => {
+      if (item.codigo === codigo) {
+        return {
+          ...item,
+          codigo: produto.codigo,
+          nome: produto.nome,
+          preco: produto.preco,
+          quantidade: produto.quantidade,
+        }
+      }
+      return item;
+    });
+    setCarrinhoProdutos(resultado);
+  };
+
+  const removerCarrinho = (codigo: string) => {
+    let resultado = carrinhoProdutos.filter((item) => {
+      return item.codigo !== codigo;
+    });
+    setCarrinhoProdutos(resultado);
+  };
+
   return (
     <UsuarioContext.Provider
       value={{
@@ -163,7 +191,12 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
         editarUsuarioDaLista,
         loginUsuario,
         loginUsuario2,
-        criarUsuario2
+        criarUsuario2,
+        carrinhoProdutos,
+        setCarrinhoProdutos,
+        adicionarCarrinho,
+        editarCarrinho,
+        removerCarrinho
       }}
     >{children}</UsuarioContext.Provider>
   );

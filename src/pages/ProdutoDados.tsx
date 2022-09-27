@@ -1,17 +1,17 @@
-import { useEffect, useState/*, useContext */ } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Button, Col, ListGroup, Row } from 'react-bootstrap';
 import { /* useNavigate, */ useParams } from 'react-router-dom';
 import ContainerApp from '../components/ContainerApp';
 import { Flex } from '../components/Flex';
-// import { UsuarioContext } from '../context/usuarioContext';
-// import { UsuarioContextType } from '../types/types';
+import { UsuarioContext } from '../context/usuarioContext';
+import { UsuarioContextType } from '../types/types';
 import { ItemLista } from '../components/ItemLista';
 import { Produto } from '../types/types';
 import { FormatadorMoeda } from '../utils/Formatador';
 import { listaProdutos } from '../utils/listas';
 
 const initialValues: Produto = {
-  codigo: 0,
+  codigo: '',
   nome: '',
   preco: 0,
   quantidade: 0,
@@ -21,14 +21,14 @@ const initialValues: Produto = {
 
 export default function ProdutoDados() {
   // const navigate = useNavigate();
-  // const { usuario } = useContext(UsuarioContext || null) as UsuarioContextType;
+  const { adicionarCarrinho } = useContext(UsuarioContext || null) as UsuarioContextType;
 
   const { codigo } = useParams();
 
   const [data, setData] = useState<Produto>(initialValues);
 
   useEffect(() => {
-    let validaCodigoUrlParam = (codigo) ? Number(codigo) : 1;
+    let validaCodigoUrlParam = (codigo) ? codigo : "1";
     let resultado = listaProdutos.find((itemBusca) => {
       return itemBusca.codigo === validaCodigoUrlParam;
     });
@@ -58,7 +58,15 @@ export default function ProdutoDados() {
           >
             <Button
               variant="primary"
-              // onClick={() => navigate("/perfil_edicao")}
+              onClick={() => {
+                adicionarCarrinho({
+                  codigo: data.codigo,
+                  nome: data.nome,
+                  preco: data.preco,
+                  quantidade: 1
+                  ,
+                });
+              }}
             >Adicionar ao carrinho</Button>
           </Flex>
         </Col>
