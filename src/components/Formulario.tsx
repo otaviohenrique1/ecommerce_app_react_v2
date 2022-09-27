@@ -1,76 +1,43 @@
 import { FormikHelpers, useFormik } from 'formik';
 import { Col, Container, Form, Row, ButtonGroup } from 'react-bootstrap';
 import Button from 'react-bootstrap/esm/Button';
-import { Flex } from '../components/Flex';
-import { validaBairro, validaCEP, validaCidade, validaComplemento, validaConfirmarSenha, validaCPF, validaDataCadastro, validaDataEdicao, validaEmail, validaEstado, validaId, validaNome, validaNumero, validaRua, validaSenha, validaUsuario, } from '../utils/constants';
+import { Flex } from './Flex';
+import { validaBairro, validaCEP, validaCidade, validaComplemento, validaConfirmarSenha, validaCPF, validaEmail, validaEstado, validaNome, validaNumero, validaRua, validaSenha, validaUsuario, } from '../utils/constants';
 import { useNavigate } from "react-router-dom";
-import { UsuarioBase, UsuarioContextType } from '../types/types';
+import { UsuarioBase } from '../types/types';
 import { estadosDoBrasil } from '../utils/listas';
-import { useContext } from 'react';
-import { UsuarioContext } from '../context/usuarioContext';
 import * as yup from "yup";
 
 type UsuarioForm = UsuarioBase & { 
   confirmarSenha: string;
 }
 
+const initialValuesUsuarioForm: UsuarioForm = {
+  nome: "", email: "", usuario: "", senha: "", confirmarSenha: "", cpf: "",
+  telefone: "", rua: "", numero: "", complemento: "", bairro: "", cep: "",
+  cidade: "", estado: ""
+};
+
 const validationSchemaUsuarioForm = yup.object({
-  id: validaId, nome: validaNome, email: validaEmail,
-  usuario: validaUsuario, senha: validaSenha,
-  confirmarSenha: validaConfirmarSenha, cpf: validaCPF,
-  rua: validaRua, numero: validaNumero, complemento: validaComplemento,
-  bairro: validaBairro, cep: validaCEP, cidade: validaCidade,
-  estado: validaEstado, dataCadastro: validaDataCadastro,
-  dataEdicao: validaDataEdicao
+  nome: validaNome, email: validaEmail, usuario: validaUsuario,
+  senha: validaSenha, confirmarSenha: validaConfirmarSenha,
+  cpf: validaCPF, rua: validaRua, numero: validaNumero,
+  complemento: validaComplemento, bairro: validaBairro,
+  cep: validaCEP, cidade: validaCidade, estado: validaEstado,
 });
 
-export default function PerfilEdicao() {
-  const navigate = useNavigate();
-  
-  const { editarUsuario, usuario } = useContext(UsuarioContext || null) as UsuarioContextType;
+interface FormularioProps {
+  onSubmit: (values: UsuarioForm, formikHelpers: FormikHelpers<UsuarioForm>) => void | Promise<any>;
+  exibeBotaoVoltar: boolean;
+}
 
-  const initialValuesUsuarioForm: UsuarioForm = {
-    nome: "" || usuario.nome,
-    email: "" || usuario.email,
-    usuario: "" || usuario.usuario,
-    senha: "" || usuario.senha,
-    confirmarSenha: "",
-    cpf: "" || usuario.cpf,
-    telefone: "" || usuario.telefone,
-    rua: "" || usuario.rua,
-    numero: "" || usuario.numero,
-    complemento: "" || usuario.complemento,
-    bairro: "" || usuario.bairro,
-    cep: "" || usuario.cep,
-    cidade: "" || usuario.cidade,
-    estado: "" || usuario.estado
-  };
+export default function Formulario(props: FormularioProps) {
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: initialValuesUsuarioForm,
     validationSchema: validationSchemaUsuarioForm,
-    onSubmit: (values: UsuarioForm, formikHelpers: FormikHelpers<UsuarioForm>) => {
-      editarUsuario({
-        id: usuario.id,
-        nome: values.nome,
-        email: values.email,
-        usuario: values.usuario,
-        senha: values.senha,
-        cpf: values.cpf,
-        telefone: values.telefone,
-        rua: values.rua,
-        numero: values.numero,
-        complemento: values.complemento,
-        bairro: values.bairro,
-        cep: values.cep,
-        cidade: values.cidade,
-        estado: values.estado,
-        dataCadastro: usuario.dataCadastro,
-        dataEdicao: new Date(),
-      });
-      navigate("/perfil");
-      // console.log(values);
-    }
+    onSubmit: props.onSubmit
   });
 
   const formularioCampos = [
