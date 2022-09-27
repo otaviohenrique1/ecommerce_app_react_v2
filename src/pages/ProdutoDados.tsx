@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import { Button, Col, ListGroup, Row } from 'react-bootstrap';
-import { /* useNavigate, */ useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ContainerApp from '../components/ContainerApp';
 import { Flex } from '../components/Flex';
 import { UsuarioContext } from '../context/usuarioContext';
@@ -20,8 +20,8 @@ const initialValues: Produto = {
 };
 
 export default function ProdutoDados() {
-  // const navigate = useNavigate();
-  const { adicionarCarrinho } = useContext(UsuarioContext || null) as UsuarioContextType;
+  const navigate = useNavigate();
+  const { adicionarCarrinho, carrinhoProdutos } = useContext(UsuarioContext || null) as UsuarioContextType;
 
   const { codigo } = useParams();
 
@@ -52,20 +52,26 @@ export default function ProdutoDados() {
           </ListGroup>
         </Col>
         <Col sm={12} className="pt-2">
-          <Flex
-            flexDirection="row"
-            justifyContent="end"
-          >
+          <Flex flexDirection="row" justifyContent="end">
             <Button
               variant="primary"
               onClick={() => {
+                let resultado = carrinhoProdutos.find((item) => {
+                  return item.codigo !== data.codigo;
+                });
+
+                if (resultado) {
+                  return;
+                }
+
                 adicionarCarrinho({
                   codigo: data.codigo,
                   nome: data.nome,
                   preco: data.preco,
-                  quantidade: 1
-                  ,
+                  quantidade: 1,
                 });
+
+                navigate("/carrinho");
               }}
             >Adicionar ao carrinho</Button>
           </Flex>

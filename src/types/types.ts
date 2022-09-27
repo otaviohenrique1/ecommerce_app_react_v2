@@ -48,6 +48,7 @@ export type UsuarioContextType = {
   adicionarCarrinho: (produto: CarrinhoCompras) => void;
   editarCarrinho: (codigo: string, produto: CarrinhoCompras) => void;
   removerCarrinho: (codigo: string) => void;
+  limparCarrinho: () => void;
   carrinhoProdutos: CarrinhoCompras[];
   setCarrinhoProdutos: (value: SetStateAction<CarrinhoCompras[]>) => void;
 }

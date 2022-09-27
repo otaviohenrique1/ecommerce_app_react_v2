@@ -179,6 +179,10 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
     setCarrinhoProdutos(resultado);
   };
 
+  const limparCarrinho = () => {
+    setCarrinhoProdutos([]);
+  };
+  
   return (
     <UsuarioContext.Provider
       value={{
@@ -196,7 +200,8 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
         setCarrinhoProdutos,
         adicionarCarrinho,
         editarCarrinho,
-        removerCarrinho
+        removerCarrinho,
+        limparCarrinho
       }}
     >{children}</UsuarioContext.Provider>
   );
