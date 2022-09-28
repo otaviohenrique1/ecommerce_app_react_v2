@@ -37,7 +37,7 @@ export default function Carrinho() {
                           className="mb-3"
                         >
                           <span>{item.nome}</span>
-                          <span>{FormatadorMoeda(item.preco)}</span>
+                          <span>{`${item.quantidade} x ${FormatadorMoeda(item.preco)} = ${FormatadorMoeda(item.quantidade * item.preco)}`}</span>
                         </Flex>
                         <Flex
                           flexDirection="row"
@@ -66,7 +66,7 @@ export default function Carrinho() {
                                   codigo: item.codigo,
                                   nome: item.nome,
                                   preco: item.preco,
-                                  quantidade: item.quantidade - 1
+                                  quantidade: (item.quantidade > 0) ? item.quantidade - 1 : 1
                                 })}
                               >-</Button>
                             </InputGroup>
@@ -113,6 +113,7 @@ export default function Carrinho() {
                     }
                   });
                 }}
+                disabled={(carrinhoProdutos.length === 0) ? true : false}
               >Limpar carrinho</Button>
             </ButtonGroup>
           </Flex>
