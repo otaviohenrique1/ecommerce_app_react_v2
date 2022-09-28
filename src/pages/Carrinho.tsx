@@ -1,17 +1,18 @@
-import { useContext } from 'react';
-import { Button, ButtonGroup, Col, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
+import { useContext, useEffect, useState } from 'react';
+import { Button, ButtonGroup, Col, Form, InputGroup, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import ContainerApp from '../components/ContainerApp'
 import { Flex } from '../components/Flex';
 import { ItemListaVazio } from '../components/ItemListaVazio';
 import { UsuarioContext } from '../context/usuarioContext';
-import { UsuarioContextType } from '../types/types';
+import { CarrinhoCompras, UsuarioContextType } from '../types/types';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { FormatadorMoeda } from '../utils/Formatador';
 
 export default function Carrinho() {
   const navigate = useNavigate();
-  const { carrinhoProdutos, limparCarrinho } = useContext(UsuarioContext || null) as UsuarioContextType;
+  const { carrinhoProdutos, limparCarrinho, removerCarrinho, editarCarrinho } = useContext(UsuarioContext || null) as UsuarioContextType;
   const SwalModal = withReactContent(Swal);
 
   return (
@@ -25,26 +26,65 @@ export default function Carrinho() {
             {(carrinhoProdutos.length === 0) ? (
               <ItemListaVazio />
             ) : (
-              <ListGroupItem>
-                <Flex flexDirection="column">
-                  <Flex flexDirection="column"></Flex>
-                  <Flex flexDirection="column"></Flex>
-                  <Flex
-                    flexDirection="row"
-                    alignItems="center"
-                    justifyContent="end"
-                  >
-                    <Button
-                      variant="danger"
-                      onClick={() => { }}
-                    >Remover</Button>
-                  </Flex>
-                </Flex>
-              </ListGroupItem>
+              <>
+                {carrinhoProdutos.map((item, index) => {
+                  return (
+                    <ListGroupItem key={index}>
+                      <Flex flexDirection="column">
+                        <Flex
+                          flexDirection="row"
+                          justifyContent="space-between"
+                          className="mb-3"
+                        >
+                          <span>{item.nome}</span>
+                          <span>{FormatadorMoeda(item.preco)}</span>
+                        </Flex>
+                        <Flex
+                          flexDirection="row"
+                          alignItems="center"
+                          justifyContent="space-between"
+                        >
+                          <Flex flexDirection="row">
+                            <InputGroup>
+                              <Button
+                                variant="primary"
+                                className="fw-bold"
+                                onClick={() => editarCarrinho(item.codigo, {
+                                  codigo: item.codigo,
+                                  nome: item.nome,
+                                  preco: item.preco,
+                                  quantidade: item.quantidade + 1
+                                })}
+                              >+</Button>
+                              <Form.Control
+                                value={item.quantidade}
+                              />
+                              <Button
+                                variant="danger"
+                                className="fw-bold"
+                                onClick={() => editarCarrinho(item.codigo, {
+                                  codigo: item.codigo,
+                                  nome: item.nome,
+                                  preco: item.preco,
+                                  quantidade: item.quantidade - 1
+                                })}
+                              >-</Button>
+                            </InputGroup>
+                          </Flex>
+                          <Button
+                            variant="danger"
+                            onClick={() => removerCarrinho(item.codigo)}
+                          >Remover</Button>
+                        </Flex>
+                      </Flex>
+                    </ListGroupItem>
+                  );
+                })}
+              </>
             )}
           </ListGroup>
         </Col>
-        <Col sm={12}>
+        <Col sm={12} className="pt-5">
           <Flex justifyContent="end">
             <ButtonGroup>
               <Button
@@ -79,5 +119,91 @@ export default function Carrinho() {
         </Col>
       </Row>
     </ContainerApp>
+  );
+}
+
+interface ItemCarrinhoProps {
+  produtoCarrinho: CarrinhoCompras;
+}
+
+export function ItemCarrinho(props: ItemCarrinhoProps) {
+  const { removerCarrinho } = useContext(UsuarioContext || null) as UsuarioContextType;
+
+  const [valor, setValor] = useState<number>(0);
+
+  useEffect(() => {
+    setValor(props.produtoCarrinho.quantidade);
+  }, [props.produtoCarrinho.quantidade]);
+
+  return (
+    <ListGroupItem>
+      <Flex flexDirection="column">
+        <Flex
+          flexDirection="row"
+          justifyContent="space-between"
+          className="mb-3"
+        >
+          <span>{props.produtoCarrinho.nome}</span>
+          <span>{FormatadorMoeda(props.produtoCarrinho.preco)}</span>
+        </Flex>
+        <Flex
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Flex flexDirection="row">
+            <InputGroup>
+              <Button
+                variant="primary"
+                className="fw-bold"
+                onClick={() => setValor(valor + 1)}
+              >+</Button>
+              <Form.Control
+                value={valor}
+              />
+              <Button
+                variant="danger"
+                className="fw-bold"
+                onClick={() => setValor(valor - 1)}
+              >-</Button>
+            </InputGroup>
+          </Flex>
+          <Button
+            variant="danger"
+            onClick={() => removerCarrinho(props.produtoCarrinho.codigo)}
+          >Remover</Button>
+        </Flex>
+      </Flex>
+    </ListGroupItem>
+  );
+}
+
+interface ContadorQuantidadeProps {
+  quantidade: number;
+}
+
+export function ContadorQuantidade(props: ContadorQuantidadeProps) {
+  const [valor, setValor] = useState<number>(0);
+
+  useEffect(() => {
+    setValor(props.quantidade);
+  }, [props.quantidade]);
+
+  return (
+    <InputGroup>
+      <Button
+        variant="primary"
+        className="fw-bold"
+        onClick={() => setValor(valor + 1)}
+      >+</Button>
+      <Form.Control
+        value={valor}
+      />
+      <Button
+        variant="danger"
+        className="fw-bold"
+        onClick={() => setValor(valor - 1)}
+      >-</Button>
+    </InputGroup>
   );
 }

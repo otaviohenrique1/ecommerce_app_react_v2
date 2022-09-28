@@ -43,7 +43,7 @@ export default function Homepage() {
                           codigo: item.codigo,
                           nome: item.nome,
                           preco: item.preco,
-                          quantidade: item.quantidade,
+                          quantidade: 1,
                         })}
                       >Adicionar ao carrinho</Button>
                     </Flex>

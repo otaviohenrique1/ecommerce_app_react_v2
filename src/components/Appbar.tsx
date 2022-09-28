@@ -26,7 +26,7 @@ export default function Appbar() {
         <Navbar.Collapse id="navbar-app-nav">
           <Nav className="me-auto">
             <Nav.Link onClick={() => navigate("/homepage")}>Homepage</Nav.Link>
-            <Nav.Link onClick={() => navigate("/perfil")}>Carrinho</Nav.Link>
+            <Nav.Link onClick={() => navigate("/carrinho")}>Carrinho</Nav.Link>
           </Nav>
           <Nav>
             <NavDropdown title={<BiUserCircle size={25} />} id="usuario-dropdown">
