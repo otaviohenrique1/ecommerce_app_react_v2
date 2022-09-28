@@ -6,14 +6,12 @@ import { Flex } from '../components/Flex';
 import { ItemListaVazio } from '../components/ItemListaVazio';
 import { UsuarioContext } from '../context/usuarioContext';
 import { CarrinhoCompras, UsuarioContextType } from '../types/types';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
 import { FormatadorMoeda } from '../utils/Formatador';
+import { ModalConfirmacao } from '../components/Modal';
 
 export default function Carrinho() {
   const navigate = useNavigate();
   const { carrinhoProdutos, limparCarrinho, removerCarrinho, editarCarrinho } = useContext(UsuarioContext || null) as UsuarioContextType;
-  const SwalModal = withReactContent(Swal);
 
   return (
     <ContainerApp>
@@ -28,6 +26,9 @@ export default function Carrinho() {
             ) : (
               <>
                 {carrinhoProdutos.map((item, index) => {
+                  let resultadoQuantidadePreco = item.quantidade * item.precoUnidade;
+                  let resultadoQuantidadePrecoFormatado = `${item.quantidade} x ${FormatadorMoeda(item.precoUnidade)} = ${FormatadorMoeda(resultadoQuantidadePreco)}`;
+
                   return (
                     <ListGroupItem key={index}>
                       <Flex flexDirection="column">
@@ -37,7 +38,7 @@ export default function Carrinho() {
                           className="mb-3"
                         >
                           <span>{item.nome}</span>
-                          <span>{`${item.quantidade} x ${FormatadorMoeda(item.preco)} = ${FormatadorMoeda(item.quantidade * item.preco)}`}</span>
+                          <span>{resultadoQuantidadePrecoFormatado}</span>
                         </Flex>
                         <Flex
                           flexDirection="row"
@@ -52,12 +53,17 @@ export default function Carrinho() {
                                 onClick={() => editarCarrinho(item.codigo, {
                                   codigo: item.codigo,
                                   nome: item.nome,
-                                  preco: item.preco,
+                                  preco: resultadoQuantidadePreco,
+                                  precoUnidade: item.precoUnidade,
                                   quantidade: item.quantidade + 1
                                 })}
                               >+</Button>
                               <Form.Control
+                                id="quantidade"
+                                name="quantidade"
+                                type="number"
                                 value={item.quantidade}
+                                // defaultValue={item.quantidade}
                               />
                               <Button
                                 variant="danger"
@@ -65,15 +71,23 @@ export default function Carrinho() {
                                 onClick={() => editarCarrinho(item.codigo, {
                                   codigo: item.codigo,
                                   nome: item.nome,
-                                  preco: item.preco,
-                                  quantidade: (item.quantidade > 0) ? item.quantidade - 1 : 1
+                                  preco: resultadoQuantidadePreco,
+                                  precoUnidade: item.precoUnidade,
+                                  quantidade: (item.quantidade === 0) ? item.quantidade - 1 : 1
                                 })}
                               >-</Button>
                             </InputGroup>
                           </Flex>
                           <Button
                             variant="danger"
-                            onClick={() => removerCarrinho(item.codigo)}
+                            onClick={() => {
+                              ModalConfirmacao("Aviso", "warning", "Deseja remover o produto do carrinho?")
+                                .then(({ isConfirmed }) => {
+                                  if (isConfirmed) {
+                                    removerCarrinho(item.codigo);
+                                  }
+                                });
+                            }}
                           >Remover</Button>
                         </Flex>
                       </Flex>
@@ -82,6 +96,14 @@ export default function Carrinho() {
                 })}
               </>
             )}
+            {(carrinhoProdutos.length !== 0) ? (
+              <ListGroupItem>
+                <Flex justifyContent="end" flexDirection="row">
+                  <span className="me-2">{"Total (R$):"}</span>
+                  <span>{ }</span>
+                </Flex>
+              </ListGroupItem>
+            ) : null}
           </ListGroup>
         </Col>
         <Col sm={12} className="pt-5">
@@ -95,23 +117,12 @@ export default function Carrinho() {
               <Button
                 variant="danger"
                 onClick={() => {
-                  SwalModal.fire({
-                    title: "Aviso",
-                    icon: "warning",
-                    html: <p>Deseja mesmo limpar o carrinho?</p>,
-                    confirmButtonText: "Sim",
-                    cancelButtonText: "Não",
-                    showCancelButton: true,
-                    buttonsStyling: false,
-                    customClass: {
-                      confirmButton: "btn btn-primary mx-1",
-                      cancelButton: "btn btn-danger mx-1",
-                    }
-                  }).then(({ isConfirmed }) => {
-                    if (isConfirmed) {
-                      limparCarrinho();
-                    }
-                  });
+                  ModalConfirmacao("Aviso", "warning", "Deseja mesmo limpar o carrinho?")
+                    .then(({ isConfirmed }) => {
+                      if (isConfirmed) {
+                        limparCarrinho();
+                      }
+                    });
                 }}
                 disabled={(carrinhoProdutos.length === 0) ? true : false}
               >Limpar carrinho</Button>

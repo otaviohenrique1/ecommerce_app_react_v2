@@ -83,6 +83,7 @@ export type CarrinhoCompras = {
   codigo: string;
   nome: string;
   preco: number;
+  precoUnidade: number;
   quantidade: number;
 }
 

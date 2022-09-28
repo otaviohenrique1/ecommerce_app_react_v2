@@ -172,6 +172,7 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
           codigo: produto.codigo,
           nome: produto.nome,
           preco: produto.preco,
+          precoUnidade: produto.precoUnidade,
           quantidade: produto.quantidade,
         }
       }

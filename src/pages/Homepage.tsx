@@ -43,6 +43,7 @@ export default function Homepage() {
                           codigo: item.codigo,
                           nome: item.nome,
                           preco: item.preco,
+                          precoUnidade: item.preco,
                           quantidade: 1,
                         })}
                       >Adicionar ao carrinho</Button>
