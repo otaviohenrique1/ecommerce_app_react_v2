@@ -1,4 +1,4 @@
-import { createContext, FC, ReactNode, useState } from 'react';
+import { createContext, FC, ReactNode, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { CarrinhoCompras, UsuarioBase, UsuarioContextType, UsuarioDataTypes } from '../types/types';
 import { initialValuesFormUsuario } from '../utils/constants';
@@ -13,6 +13,10 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
   const [usuario, setUsuario] = useState<UsuarioDataTypes>(initialValuesFormUsuario);
   const [usuarios, setUsuarios] = useState<UsuarioDataTypes[]>([]);
   const [carrinhoProdutos, setCarrinhoProdutos] = useState<CarrinhoCompras[]>([]);
+
+  useEffect(() => {
+    
+  }, []);
 
   const criarUsuario = (usuario: UsuarioDataTypes) => {
     setUsuario({
@@ -191,6 +195,13 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
   const limparCarrinho = () => {
     setCarrinhoProdutos([]);
   };
+
+  const [precoTotal, setPrecoTotal] = useState<number>(0);
+
+  const totalCarrinho = () => {
+    let resultado = carrinhoProdutos.reduce((x,y) => x + y.preco, 0);
+    setPrecoTotal(resultado);
+  };
   
   return (
     <UsuarioContext.Provider
@@ -210,7 +221,10 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
         adicionarCarrinho,
         editarCarrinho,
         removerCarrinho,
-        limparCarrinho
+        limparCarrinho,
+        precoTotal,
+        setPrecoTotal,
+        totalCarrinho
       }}
     >{children}</UsuarioContext.Provider>
   );

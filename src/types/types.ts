@@ -51,6 +51,9 @@ export type UsuarioContextType = {
   limparCarrinho: () => void;
   carrinhoProdutos: CarrinhoCompras[];
   setCarrinhoProdutos: (value: SetStateAction<CarrinhoCompras[]>) => void;
+  precoTotal: number;
+  setPrecoTotal: (value: SetStateAction<number>) => void;
+  totalCarrinho: () => void;
 }
 
 export type UsuarioBase = {

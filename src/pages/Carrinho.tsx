@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Button, ButtonGroup, Col, Form, InputGroup, ListGroup, ListGroupItem, Row } from 'react-bootstrap';
+import { Button, ButtonGroup, Col, Form, InputGroup, ListGroup, ListGroupItem, Row, Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import ContainerApp from '../components/ContainerApp'
 import { Flex } from '../components/Flex';
@@ -11,7 +11,15 @@ import { ModalConfirmacao } from '../components/Modal';
 
 export default function Carrinho() {
   const navigate = useNavigate();
-  const { carrinhoProdutos, limparCarrinho, removerCarrinho, editarCarrinho } = useContext(UsuarioContext || null) as UsuarioContextType;
+  const { carrinhoProdutos, limparCarrinho, removerCarrinho, editarCarrinho, precoTotal } = useContext(UsuarioContext || null) as UsuarioContextType;
+  // const [precoTotal, setPrecoTotal] = useState<number>(0);
+
+  // useEffect(() => {
+  //   console.log(carrinhoProdutos);
+  //   console.log(carrinhoProdutos.reduce((x, y) => x + y.preco, 0));
+
+  //   setPrecoTotal(carrinhoProdutos.reduce((x, y) => x + y.preco, 0));
+  // }, [carrinhoProdutos])
 
   return (
     <ContainerApp>
@@ -20,6 +28,46 @@ export default function Carrinho() {
           <h1 className="mt-3 mb-5 text-center">Carrinho</h1>
         </Col>
         <Col sm={12}>
+          <Table striped bordered hover size="sm">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {(carrinhoProdutos.length === 0) ? (
+                <td colSpan={4} align="center">Lista vazia</td>
+              ) : (
+                <>
+                  {carrinhoProdutos.map((item, index) => {
+                    return (
+                      <tr>
+                        <td>{item.nome}</td>
+                        <td>{item.quantidade}</td>
+                        <td>{item.quantidade * item.precoUnidade}</td>
+                        <td>
+                          <Button
+                            variant="danger"
+                            onClick={() => {
+                              ModalConfirmacao("Aviso", "warning", "Deseja remover o produto do carrinho?")
+                                .then(({ isConfirmed }) => {
+                                  if (isConfirmed) {
+                                    removerCarrinho(item.codigo);
+                                  }
+                                });
+                            }}
+                          >Remover</Button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </>
+              )}
+            </tbody>
+          </Table>
           <ListGroup>
             {(carrinhoProdutos.length === 0) ? (
               <ItemListaVazio />
@@ -63,7 +111,7 @@ export default function Carrinho() {
                                 name="quantidade"
                                 type="number"
                                 value={item.quantidade}
-                                // defaultValue={item.quantidade}
+                              // defaultValue={item.quantidade}
                               />
                               <Button
                                 variant="danger"
@@ -100,7 +148,7 @@ export default function Carrinho() {
               <ListGroupItem>
                 <Flex justifyContent="end" flexDirection="row">
                   <span className="me-2">{"Total (R$):"}</span>
-                  <span>{ }</span>
+                  <span>{precoTotal}</span>
                 </Flex>
               </ListGroupItem>
             ) : null}
