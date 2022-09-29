@@ -33,6 +33,7 @@ export default function Carrinho() {
               <tr>
                 <th>Nome</th>
                 <th>Quantidade</th>
+                <th>Preço(Un.)</th>
                 <th>Preço</th>
                 <th></th>
               </tr>
