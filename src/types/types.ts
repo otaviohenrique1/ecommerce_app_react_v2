@@ -94,7 +94,7 @@ export interface Produto {
   codigo: string;
   nome: string;
   preco: number;
-  quantidade: number;
+  // quantidade: number;
   tipo: string;
   marca: string;
 }

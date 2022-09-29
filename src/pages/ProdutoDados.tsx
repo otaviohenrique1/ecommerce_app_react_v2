@@ -10,11 +10,11 @@ import { Produto } from '../types/types';
 import { FormatadorMoeda } from '../utils/Formatador';
 import { listaProdutos } from '../utils/listas';
 
-const initialValues: Produto = {
+const initialValues = {
   codigo: '',
   nome: '',
   preco: 0,
-  quantidade: 0,
+  // quantidade: 0,
   tipo: '',
   marca: ''
 };
@@ -46,7 +46,7 @@ export default function ProdutoDados() {
             <ItemLista label="codigo:" valor={String(data.codigo)} />
             <ItemLista label="nome:" valor={data.nome} />
             <ItemLista label="preco:" valor={FormatadorMoeda(data.preco)} />
-            <ItemLista label="quantidade:" valor={String(data.quantidade)} />
+            {/* <ItemLista label="quantidade:" valor={String(data.quantidade)} /> */}
             <ItemLista label="tipo:" valor={data.tipo} />
             <ItemLista label="marca:" valor={data.marca} />
           </ListGroup>

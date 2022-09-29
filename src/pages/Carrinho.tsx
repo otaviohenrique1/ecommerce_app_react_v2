@@ -69,7 +69,7 @@ export default function Carrinho() {
               )}
             </tbody>
           </Table>
-          <ListGroup>
+          {/* <ListGroup>
             {(carrinhoProdutos.length === 0) ? (
               <ItemListaVazio />
             ) : (
@@ -153,7 +153,7 @@ export default function Carrinho() {
                 </Flex>
               </ListGroupItem>
             ) : null}
-          </ListGroup>
+          </ListGroup> */}
         </Col>
         <Col sm={12} className="pt-5">
           <Flex justifyContent="end">

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Button, Col, Form, InputGroup, /* ListGroup, ListGroupItem, */ Row, Table } from 'react-bootstrap';
 import ContainerApp from '../components/ContainerApp';
 // import { Flex } from '../components/Flex';
@@ -31,63 +31,70 @@ export default function Homepage() {
             <tbody>
               {listaProdutos.map((item, index) => {
                 return (
-                  <tr key={index}>
-                    <td>{`${item.marca} ${item.nome}`}</td>
-                    <td>{FormatadorMoeda(item.preco)}</td>
-                    <td>
-                      <InputGroup>
-                        <Button
-                          variant="primary"
-                          size="sm"
-                          className="fw-bold"
-                          onClick={() => editarCarrinho(item.codigo, {
-                            codigo: item.codigo,
-                            nome: item.nome,
-                            preco: item.preco * item.quantidade,
-                            precoUnidade: item.preco,
-                            quantidade: item.quantidade + 1
-                          })}
-                        >+</Button>
-                        <Form.Control
-                          id="quantidade"
-                          name="quantidade"
-                          type="number"
-                          size="sm"
-                          value={item.quantidade}
-                          style={{ width: "100px" }}
-                        // defaultValue={item.quantidade}
-                        />
-                        <Button
-                          variant="danger"
-                          size="sm"
-                          className="fw-bold"
-                          onClick={() => editarCarrinho(item.codigo, {
-                            codigo: item.codigo,
-                            nome: item.nome,
-                            preco: item.preco * item.quantidade,
-                            precoUnidade: item.preco,
-                            quantidade: (item.quantidade === 0) ? item.quantidade - 1 : 1
-                          })}
-                        >-</Button> 
-                      </InputGroup>
-                    </td>
-                    <td align="right">
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => {
-                          adicionarCarrinho({
-                            codigo: item.codigo,
-                            nome: item.nome,
-                            preco: item.preco,
-                            precoUnidade: item.preco,
-                            quantidade: item.quantidade,
-                          });
-                          navigate("/carrinho");
-                        }}
-                      >Adicionar</Button>
-                    </td>
-                  </tr>
+                  <ItemTabela
+                    key={index}
+                    codigo={item.codigo}
+                    nome={item.nome}
+                    marca={item.marca}
+                    preco={item.preco}
+                  />
+                  //   <tr key={index}>
+                  //     <td>{`${item.marca} ${item.nome}`}</td>
+                  //     <td>{FormatadorMoeda(item.preco)}</td>
+                  //     <td>
+                  //       <InputGroup>
+                  //         <Button
+                  //           variant="primary"
+                  //           size="sm"
+                  //           className="fw-bold"
+                  //           onClick={() => editarCarrinho(item.codigo, {
+                  //             codigo: item.codigo,
+                  //             nome: item.nome,
+                  //             preco: item.preco * item.quantidade,
+                  //             precoUnidade: item.preco,
+                  //             quantidade: item.quantidade + 1
+                  //           })}
+                  //         >+</Button>
+                  //         <Form.Control
+                  //           id="quantidade"
+                  //           name="quantidade"
+                  //           type="number"
+                  //           size="sm"
+                  //           value={item.quantidade}
+                  //           style={{ width: "100px" }}
+                  //         // defaultValue={item.quantidade}
+                  //         />
+                  //         <Button
+                  //           variant="danger"
+                  //           size="sm"
+                  //           className="fw-bold"
+                  //           onClick={() => editarCarrinho(item.codigo, {
+                  //             codigo: item.codigo,
+                  //             nome: item.nome,
+                  //             preco: item.preco * item.quantidade,
+                  //             precoUnidade: item.preco,
+                  //             quantidade: (item.quantidade === 0) ? item.quantidade - 1 : 1
+                  //           })}
+                  //         >-</Button>
+                  //       </InputGroup>
+                  //     </td>
+                  //     <td align="right">
+                  //       <Button
+                  //         variant="primary"
+                  //         size="sm"
+                  //         onClick={() => {
+                  //           adicionarCarrinho({
+                  //             codigo: item.codigo,
+                  //             nome: item.nome,
+                  //             preco: item.preco,
+                  //             precoUnidade: item.preco,
+                  //             quantidade: item.quantidade,
+                  //           });
+                  //           navigate("/carrinho");
+                  //         }}
+                  //       >Adicionar</Button>
+                  //     </td>
+                  //   </tr>
                 );
               })}
             </tbody>
@@ -131,5 +138,84 @@ export default function Homepage() {
         </Col>
       </Row>
     </ContainerApp>
+  );
+}
+
+interface ItemTabelaProps {
+  codigo: string;
+  nome: string;
+  marca: string;
+  preco: number;
+}
+
+function ItemTabela(props: ItemTabelaProps) {
+  const navigate = useNavigate();
+  const { adicionarCarrinho, editarCarrinho } = useContext(UsuarioContext || null) as UsuarioContextType;
+  const [quantidade, setQuantidade] = useState(0);
+
+  return (
+    <tr>
+      <td>{`${props.marca} ${props.nome}`}</td>
+      <td>{FormatadorMoeda(props.preco)}</td>
+      <td>
+        <InputGroup>
+          <Button
+            variant="primary"
+            size="sm"
+            className="fw-bold"
+            onClick={() => {
+              editarCarrinho(props.codigo, {
+                codigo: props.codigo,
+                nome: props.nome,
+                preco: props.preco * quantidade,
+                precoUnidade: props.preco,
+                quantidade: quantidade + 1
+              });
+              setQuantidade(quantidade + 1);
+            }}
+          >+</Button>
+          <Form.Control
+            id="quantidade"
+            name="quantidade"
+            type="number"
+            size="sm"
+            value={quantidade}
+            style={{ width: "100px" }}
+          // defaultValue={item.quantidade}
+          />
+          <Button
+            variant="danger"
+            size="sm"
+            className="fw-bold"
+            onClick={() => {
+              editarCarrinho(props.codigo, {
+                codigo: props.codigo,
+                nome: props.nome,
+                preco: props.preco * quantidade,
+                precoUnidade: props.preco,
+                quantidade: quantidade
+              });
+              setQuantidade((quantidade < 0) ? quantidade - 1 : 0);
+            }}
+          >-</Button>
+        </InputGroup>
+      </td>
+      <td align="right">
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={() => {
+            adicionarCarrinho({
+              codigo: props.codigo,
+              nome: props.nome,
+              preco: props.preco * quantidade,
+              precoUnidade: props.preco,
+              quantidade: quantidade,
+            });
+            navigate("/carrinho");
+          }}
+        >Adicionar</Button>
+      </td>
+    </tr>
   );
 }
