@@ -149,7 +149,7 @@ interface ItemTabelaProps {
 function ItemTabela(props: ItemTabelaProps) {
   const navigate = useNavigate();
   const { adicionarCarrinho, editarCarrinho } = useContext(UsuarioContext || null) as UsuarioContextType;
-  const [quantidade, setQuantidade] = useState(0);
+  const [quantidade, setQuantidade] = useState(1);
 
   return (
     <tr>
@@ -208,11 +208,12 @@ function ItemTabela(props: ItemTabelaProps) {
               nome: props.nome,
               preco: props.preco * quantidade,
               precoUnidade: props.preco,
-              quantidade: quantidade,
+              // quantidade: (quantidade === 0) ? 1 : quantidade,
+              quantidade: 1,
             });
             navigate("/carrinho");
           }}
-          disabled={(quantidade === 0) ? true : false}
+          // disabled={(quantidade === 0) ? true : false}
         >Adicionar</Button>
       </td>
     </tr>

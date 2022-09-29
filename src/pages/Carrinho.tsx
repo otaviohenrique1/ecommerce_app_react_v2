@@ -12,11 +12,11 @@ import { ModalConfirmacao } from '../components/Modal';
 export default function Carrinho() {
   const navigate = useNavigate();
   const { carrinhoProdutos, limparCarrinho, removerCarrinho, /* editarCarrinho, */ } = useContext(UsuarioContext || null) as UsuarioContextType;
-  // const [precoTotal, setPrecoTotal] = useState<number>(0);
+  const [precoTotal, setPrecoTotal] = useState<number>(0);
 
-  // useEffect(() => {
-  //   setPrecoTotal(carrinhoProdutos.reduce((x, y) => x + y.preco, 0));
-  // }, [carrinhoProdutos]);
+  useEffect(() => {
+    setPrecoTotal(carrinhoProdutos.reduce((x, y) => x + y.preco, 0));
+  }, [carrinhoProdutos]);
 
   return (
     <ContainerApp>
@@ -71,8 +71,8 @@ export default function Carrinho() {
                 <td align="right" colSpan={5}>
                   <Flex justifyContent="end" flexDirection="row">
                     <span className="me-2">{"Total:"}</span>
-                    {/* <span>{precoTotal}</span> */}
-                    <span>{FormatadorMoeda(carrinhoProdutos.reduce((x, y) => x + y.preco, 0))}</span>
+                    <span>{FormatadorMoeda(precoTotal)}</span>
+                    {/* <span>{FormatadorMoeda(carrinhoProdutos.reduce((x, y) => x + y.preco, 0))}</span> */}
                   </Flex>
                 </td>
               </tr>
