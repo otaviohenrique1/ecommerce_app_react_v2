@@ -35,7 +35,6 @@ export default function Homepage() {
                     key={index}
                     codigo={item.codigo}
                     nome={item.nome}
-                    marca={item.marca}
                     preco={item.preco}
                   />
                   //   <tr key={index}>
@@ -144,7 +143,6 @@ export default function Homepage() {
 interface ItemTabelaProps {
   codigo: string;
   nome: string;
-  marca: string;
   preco: number;
 }
 
@@ -155,7 +153,7 @@ function ItemTabela(props: ItemTabelaProps) {
 
   return (
     <tr>
-      <td>{`${props.marca} ${props.nome}`}</td>
+      <td>{props.nome}</td>
       <td>{FormatadorMoeda(props.preco)}</td>
       <td>
         <InputGroup>
@@ -214,6 +212,7 @@ function ItemTabela(props: ItemTabelaProps) {
             });
             navigate("/carrinho");
           }}
+          disabled={(quantidade === 0) ? true : false}
         >Adicionar</Button>
       </td>
     </tr>

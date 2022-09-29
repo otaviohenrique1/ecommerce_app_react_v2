@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
-import { Button, ButtonGroup, Col, Form, InputGroup, ListGroup, ListGroupItem, Row, Table } from 'react-bootstrap';
+import { Button, ButtonGroup, Col, Form, InputGroup, /* ListGroup, */ ListGroupItem, Row, Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import ContainerApp from '../components/ContainerApp'
 import { Flex } from '../components/Flex';
-import { ItemListaVazio } from '../components/ItemListaVazio';
+// import { ItemListaVazio } from '../components/ItemListaVazio';
 import { UsuarioContext } from '../context/usuarioContext';
 import { CarrinhoCompras, UsuarioContextType } from '../types/types';
 import { FormatadorMoeda } from '../utils/Formatador';
@@ -11,15 +11,12 @@ import { ModalConfirmacao } from '../components/Modal';
 
 export default function Carrinho() {
   const navigate = useNavigate();
-  const { carrinhoProdutos, limparCarrinho, removerCarrinho, editarCarrinho, precoTotal } = useContext(UsuarioContext || null) as UsuarioContextType;
+  const { carrinhoProdutos, limparCarrinho, removerCarrinho, /* editarCarrinho, */ } = useContext(UsuarioContext || null) as UsuarioContextType;
   // const [precoTotal, setPrecoTotal] = useState<number>(0);
 
   // useEffect(() => {
-  //   console.log(carrinhoProdutos);
-  //   console.log(carrinhoProdutos.reduce((x, y) => x + y.preco, 0));
-
   //   setPrecoTotal(carrinhoProdutos.reduce((x, y) => x + y.preco, 0));
-  // }, [carrinhoProdutos])
+  // }, [carrinhoProdutos]);
 
   return (
     <ContainerApp>
@@ -33,8 +30,8 @@ export default function Carrinho() {
               <tr>
                 <th>Nome</th>
                 <th>Quantidade</th>
-                <th>Preço(Un.)</th>
-                <th>Preço</th>
+                <th>Preço(Unidade)</th>
+                <th>Preço(Montante)</th>
                 <th></th>
               </tr>
             </thead>
@@ -48,8 +45,9 @@ export default function Carrinho() {
                       <tr>
                         <td>{item.nome}</td>
                         <td>{item.quantidade}</td>
+                        <td>{item.precoUnidade}</td>
                         <td>{item.quantidade * item.precoUnidade}</td>
-                        <td>
+                        <td align="right">
                           <Button
                             variant="danger"
                             onClick={() => {
@@ -68,6 +66,17 @@ export default function Carrinho() {
                 </>
               )}
             </tbody>
+            <tfoot>
+              <tr>
+                <td align="right" colSpan={5}>
+                  <Flex justifyContent="end" flexDirection="row">
+                    <span className="me-2">{"Total:"}</span>
+                    {/* <span>{precoTotal}</span> */}
+                    <span>{FormatadorMoeda(carrinhoProdutos.reduce((x, y) => x + y.preco, 0))}</span>
+                  </Flex>
+                </td>
+              </tr>
+            </tfoot>
           </Table>
           {/* <ListGroup>
             {(carrinhoProdutos.length === 0) ? (
