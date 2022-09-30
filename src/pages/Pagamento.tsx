@@ -1,7 +1,8 @@
-import { Col, Container, Form, Row } from 'react-bootstrap';
+import { Button, ButtonGroup, Col, Container, Form, Row } from 'react-bootstrap';
 import ContainerApp from '../components/ContainerApp';
 import * as yup from "yup";
 import { useFormik } from 'formik';
+import { Flex } from '../components/Flex';
 
 interface PagamentoForm {
   formaPagamento: string;
@@ -48,7 +49,7 @@ export default function Pagamento() {
                   aria-label="Estado select"
                   name="estado"
                   value={formik.values.formaPagamento}
-                  onChange={formik.handleChange}
+                  // onChange={formik.handleChange}
                 >
                   <option value="">Selecione</option>
                   {listaFormaPagamentos.map((item, index) => (
@@ -64,6 +65,14 @@ export default function Pagamento() {
                   </Form.Text>
                 ) : null}
               </Form.Group>
+              <Flex justifyContent="end" alignItems="center" flexDirection="row">
+                <ButtonGroup>
+                  <Button
+                    variant="success"
+                    size="sm"
+                  >Finalizar compra</Button>
+                </ButtonGroup>
+              </Flex>
             </Form>
           </Col>
           <Col sm={12}></Col>

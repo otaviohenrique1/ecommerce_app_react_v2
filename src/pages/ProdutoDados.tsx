@@ -56,6 +56,7 @@ export default function ProdutoDados() {
               <Button
                 variant="success"
                 size="sm"
+                onClick={() => {}}
               >Adicionar aos favoritos</Button>
               <Button
                 variant="primary"

@@ -51,9 +51,14 @@ export type UsuarioContextType = {
   limparCarrinho: () => void;
   carrinhoProdutos: CarrinhoCompras[];
   setCarrinhoProdutos: (value: SetStateAction<CarrinhoCompras[]>) => void;
-  precoTotal: number;
-  setPrecoTotal: (value: SetStateAction<number>) => void;
-  totalCarrinho: () => void;
+  // adicionarFavorito: (produto: Produto) => void;
+  // removerFavorito: (id: number) => void;
+  // listarFavoritos: () => Produto;
+}
+
+interface Favorito {
+  nome: string;
+  preco: number;
 }
 
 export type UsuarioBase = {

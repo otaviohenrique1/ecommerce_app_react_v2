@@ -10,7 +10,24 @@ export default function Favoritos() {
             <h1 className="mt-3 mb-5 text-center">Favoritos</h1>
           </Col>
           <Col sm={12}>
-            <Table></Table>
+            <Table size="sm" striped>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nome</th>
+                  <th>Preço</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </Table>
           </Col>
         </Row>
       </Container>

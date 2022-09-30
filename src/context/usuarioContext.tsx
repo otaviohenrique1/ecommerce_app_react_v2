@@ -185,13 +185,6 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
   const limparCarrinho = () => {
     setCarrinhoProdutos([]);
   };
-
-  const [precoTotal, setPrecoTotal] = useState<number>(0);
-
-  const totalCarrinho = () => {
-    let resultado = carrinhoProdutos.reduce((x,y) => x + y.preco, 0);
-    setPrecoTotal(resultado);
-  };
   
   return (
     <UsuarioContext.Provider
@@ -212,9 +205,6 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
         editarCarrinho,
         removerCarrinho,
         limparCarrinho,
-        precoTotal,
-        setPrecoTotal,
-        totalCarrinho
       }}
     >{children}</UsuarioContext.Provider>
   );
