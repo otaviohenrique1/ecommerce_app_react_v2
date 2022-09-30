@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Button, Col, Row, Table } from 'react-bootstrap';
+import { Button, ButtonGroup, Col, Row, Table } from 'react-bootstrap';
 import ContainerApp from '../components/ContainerApp';
 import { UsuarioContext } from '../context/usuarioContext';
 import { UsuarioContextType } from '../types/types';
@@ -35,18 +35,25 @@ export default function Homepage() {
                       <td>{item.nome}</td>
                       <td>{FormatadorMoeda(item.preco)}</td>
                       <td align="right">
-                        <Button
-                          variant="primary"
-                          size="sm"
-                          onClick={() => {
-                            adicionarCarrinho({
-                              codigo: item.codigo,
-                              nome: item.nome,
-                              preco: item.preco,
-                            });
-                            navigate("/carrinho");
-                          }}
-                        >Adicionar</Button>
+                        <ButtonGroup>
+                          <Button
+                            variant="success"
+                            size="sm"
+                            onClick={() => navigate(`/produto/${item.codigo}`)}
+                          >Exibir</Button>
+                          <Button
+                            variant="primary"
+                            size="sm"
+                            onClick={() => {
+                              adicionarCarrinho({
+                                codigo: item.codigo,
+                                nome: item.nome,
+                                preco: item.preco,
+                              });
+                              navigate("/carrinho");
+                            }}
+                          >Adicionar</Button>
+                        </ButtonGroup>
                       </td>
                     </tr>
                 );

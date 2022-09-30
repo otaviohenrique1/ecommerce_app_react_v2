@@ -24,7 +24,7 @@ export default function Perfil() {
             <ItemLista label="Nome:" valor={usuario.nome} />
             <ItemLista label="E-mail:" valor={usuario.email} />
             <ItemLista label="Usuario:" valor={usuario.usuario} />
-            <ItemLista label="Senha:" valor={usuario.senha} />
+            <ItemLista label="Senha:" valor={"**********"} />
             <ItemLista label="CPF:" valor={usuario.cpf} />
             <ItemLista label="Telefone:" valor={usuario.telefone} />
             <ItemLista label="Rua:" valor={usuario.rua} />

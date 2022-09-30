@@ -43,12 +43,11 @@ export default function ProdutoDados() {
         </Col>
         <Col sm={12}>
           <ListGroup>
-            <ItemLista label="codigo:" valor={String(data.codigo)} />
-            <ItemLista label="nome:" valor={data.nome} />
-            <ItemLista label="preco:" valor={FormatadorMoeda(data.preco)} />
-            {/* <ItemLista label="quantidade:" valor={String(data.quantidade)} /> */}
-            <ItemLista label="tipo:" valor={data.tipo} />
-            <ItemLista label="marca:" valor={data.marca} />
+            <ItemLista label="Código:" valor={String(data.codigo)} />
+            <ItemLista label="Nome:" valor={data.nome} />
+            <ItemLista label="Preço:" valor={FormatadorMoeda(data.preco)} />
+            <ItemLista label="Tipo:" valor={data.tipo} />
+            <ItemLista label="Marca:" valor={data.marca} />
           </ListGroup>
         </Col>
         <Col sm={12} className="pt-2">
