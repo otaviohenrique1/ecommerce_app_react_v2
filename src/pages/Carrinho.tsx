@@ -35,7 +35,11 @@ export default function Carrinho() {
             </thead>
             <tbody>
               {(carrinhoProdutos.length === 0) ? (
-                <td colSpan={5} align="center">Lista vazia</td>
+                <tr>
+                  <td colSpan={5} align="center">
+                    <h2>Lista vazia</h2>
+                  </td>
+                </tr>
               ) : (
                 <>
                   {carrinhoProdutos.map((item, index) => {
