@@ -83,6 +83,11 @@ export default function Carrinho() {
           <Flex justifyContent="end">
             <ButtonGroup>
               <Button
+                variant="success"
+                onClick={() => navigate("/homepage")}
+                disabled={(carrinhoProdutos.length === 0) ? true : false}
+              >Continuar comprando</Button>
+              <Button
                 variant="primary"
                 onClick={() => navigate("/pagamento")}
                 disabled={(carrinhoProdutos.length === 0) ? true : false}
@@ -99,6 +104,10 @@ export default function Carrinho() {
                 }}
                 disabled={(carrinhoProdutos.length === 0) ? true : false}
               >Limpar carrinho</Button>
+              <Button
+                variant="warning"
+                onClick={() => navigate("/homepage")}
+              >Voltar</Button>
             </ButtonGroup>
           </Flex>
         </Col>
