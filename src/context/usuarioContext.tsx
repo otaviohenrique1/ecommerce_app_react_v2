@@ -157,14 +157,6 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
   };
 
   const adicionarCarrinho = (produto: CarrinhoCompras) => {
-    let resultado = carrinhoProdutos.find((item) => {
-      return item.codigo === produto.codigo;
-    });
-
-    if (resultado) {
-      return;
-    }
-
     setCarrinhoProdutos([...carrinhoProdutos, produto]);
   };
 
@@ -176,8 +168,6 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
           codigo: produto.codigo,
           nome: produto.nome,
           preco: produto.preco,
-          precoUnidade: produto.precoUnidade,
-          quantidade: produto.quantidade,
         }
       }
       return item;
@@ -185,9 +175,9 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
     setCarrinhoProdutos(resultado);
   };
 
-  const removerCarrinho = (codigo: string) => {
-    let resultado = carrinhoProdutos.filter((item) => {
-      return item.codigo !== codigo;
+  const removerCarrinho = (id: number) => {
+    let resultado = carrinhoProdutos.filter((item, index) => {
+      return index !== id;
     });
     setCarrinhoProdutos(resultado);
   };

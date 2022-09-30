@@ -1,5 +1,3 @@
-import { Produto } from "../types/types";
-
 export const estadosDoBrasil = [
   { label: "Acre", value: "AC" },
   { label: "Alagoas", value: "AL" },

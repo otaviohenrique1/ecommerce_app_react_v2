@@ -60,8 +60,6 @@ export default function ProdutoDados() {
                   codigo: data.codigo,
                   nome: data.nome,
                   preco: data.preco,
-                  precoUnidade: data.preco,
-                  quantidade: 1,
                 });
 
                 navigate("/carrinho");

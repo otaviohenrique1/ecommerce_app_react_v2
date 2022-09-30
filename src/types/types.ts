@@ -47,7 +47,7 @@ export type UsuarioContextType = {
   criarUsuario2: (usuario: UsuarioBase) => void;
   adicionarCarrinho: (produto: CarrinhoCompras) => void;
   editarCarrinho: (codigo: string, produto: CarrinhoCompras) => void;
-  removerCarrinho: (codigo: string) => void;
+  removerCarrinho: (id: number) => void;
   limparCarrinho: () => void;
   carrinhoProdutos: CarrinhoCompras[];
   setCarrinhoProdutos: (value: SetStateAction<CarrinhoCompras[]>) => void;
@@ -86,15 +86,12 @@ export type CarrinhoCompras = {
   codigo: string;
   nome: string;
   preco: number;
-  precoUnidade: number;
-  quantidade: number;
 }
 
 export interface Produto {
   codigo: string;
   nome: string;
   preco: number;
-  // quantidade: number;
-  tipo: string;
   marca: string;
+  tipo: string;
 }
