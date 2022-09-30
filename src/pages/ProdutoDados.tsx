@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { Button, Col, ListGroup, Row } from 'react-bootstrap';
+import { Button, ButtonGroup, Col, ListGroup, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import ContainerApp from '../components/ContainerApp';
 import { Flex } from '../components/Flex';
@@ -52,18 +52,24 @@ export default function ProdutoDados() {
         </Col>
         <Col sm={12} className="pt-2">
           <Flex flexDirection="row" justifyContent="end">
-            <Button
-              variant="primary"
-              onClick={() => {
-                adicionarCarrinho({
-                  codigo: data.codigo,
-                  nome: data.nome,
-                  preco: data.preco,
-                });
-
-                navigate("/carrinho");
-              }}
-            >Adicionar ao carrinho</Button>
+            <ButtonGroup>
+              <Button
+                variant="success"
+                size="sm"
+              >Adicionar aos favoritos</Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => {
+                  adicionarCarrinho({
+                    codigo: data.codigo,
+                    nome: data.nome,
+                    preco: data.preco,
+                  });
+                  navigate("/carrinho");
+                }}
+              >Adicionar ao carrinho</Button>
+            </ButtonGroup>
           </Flex>
         </Col>
       </Row>
