@@ -5,10 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import { Flex } from './Flex';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { useContext } from 'react';
+import { UsuarioContext } from '../context/usuarioContext';
+import { UsuarioContextType } from '../types/types';
 
 export default function Appbar() {
   const navigate = useNavigate();
   const SwalModal = withReactContent(Swal);
+
+  const { removerAuthToken } = useContext(UsuarioContext || null) as UsuarioContextType;
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
@@ -50,6 +55,7 @@ export default function Appbar() {
                     }
                   }).then(({ isConfirmed }) => {
                     if (isConfirmed) {
+                      removerAuthToken();
                       navigate("/");
                     }
                   });

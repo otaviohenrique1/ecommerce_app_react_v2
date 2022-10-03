@@ -14,7 +14,7 @@ export default function Login() {
   const navigate = useNavigate();
   const SwalModal = withReactContent(Swal);
 
-  const { loginUsuario } = useContext(UsuarioContext || null) as UsuarioContextType;
+  const { loginUsuario, adicionarAuthToken } = useContext(UsuarioContext || null) as UsuarioContextType;
 
   const formik = useFormik({
     initialValues: initialValuesFormLogin,
@@ -33,6 +33,7 @@ export default function Login() {
           }
         });
       }
+      adicionarAuthToken(resultado.auth_token);
       navigate("/homepage");
       // console.log(values);
       // console.log(resultado);
