@@ -190,6 +190,14 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
   };
   
   const adicionarFavorito = (favorito: Favorito) => {
+    let favoritoBusca = favoritos.find((itemBusca) => {
+      return itemBusca.codigo === favorito.codigo;
+    });
+
+    if (!favoritoBusca) {
+      return;
+    }
+
     setFavoritos([
       ...favoritos,
       {

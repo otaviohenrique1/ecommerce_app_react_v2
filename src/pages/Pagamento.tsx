@@ -37,7 +37,7 @@ export default function Pagamento() {
             <h1 className="mt-3 mb-5 text-center">Finalizar Compra</h1>
           </Col>
           <Col sm={12}>
-            <Form>
+            <Form onSubmit={formik.handleSubmit}>
               <Form.Group
                 className="mb-3"
                 controlId="estado"
@@ -71,6 +71,10 @@ export default function Pagamento() {
                     variant="success"
                     size="sm"
                   >Finalizar compra</Button>
+                  <Button
+                    variant="danger"
+                    size="sm"
+                  >Limpar</Button>
                 </ButtonGroup>
               </Flex>
             </Form>
