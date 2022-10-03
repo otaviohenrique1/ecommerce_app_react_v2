@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { LoginUsuarioDataTypes, UsuarioBase, UsuarioDataTypes } from "../types/types";
+import { Favorito, LoginUsuarioDataTypes, UsuarioBase, UsuarioDataTypes } from "../types/types";
 
 export const validaId = yup.string().required('Campo id vazio');
 export const validaNome = yup.string().required('Campo senha vazio');
@@ -105,4 +105,10 @@ export const initialValuesUsuarioBase: UsuarioBase = {
   cep: "",
   cidade: "",
   estado: ""
+};
+
+export const initialValuesFavorito: Favorito = {
+  codigo: "",
+  nome: "",
+  preco: 0
 };

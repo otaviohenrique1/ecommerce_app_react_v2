@@ -1,6 +1,6 @@
 import { createContext, FC, ReactNode, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { CarrinhoCompras, UsuarioBase, UsuarioContextType, UsuarioDataTypes } from '../types/types';
+import { CarrinhoCompras, Favorito, UsuarioBase, UsuarioContextType, UsuarioDataTypes } from '../types/types';
 import { initialValuesFormUsuario } from '../utils/constants';
 
 export const UsuarioContext = createContext<UsuarioContextType | null>(null);
@@ -13,9 +13,10 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
   const [usuario, setUsuario] = useState<UsuarioDataTypes>(initialValuesFormUsuario);
   const [usuarios, setUsuarios] = useState<UsuarioDataTypes[]>([]);
   const [carrinhoProdutos, setCarrinhoProdutos] = useState<CarrinhoCompras[]>([]);
+  const [favoritos, setFavoritos] = useState<Favorito[]>([]);
 
   useEffect(() => {
-    
+    // 
   }, []);
 
   const criarUsuario = (usuario: UsuarioDataTypes) => {
@@ -186,6 +187,26 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
     setCarrinhoProdutos([]);
   };
   
+  const adicionarFavorito = (favorito: Favorito) => {
+    setFavoritos([
+      ...favoritos,
+      {
+        codigo: favorito.codigo,
+        nome: favorito.nome,
+        preco: favorito.preco,
+      }
+    ]);
+  };
+
+  const removerFavorito = (codigo: string) => {
+    let resultado = favoritos.filter((item) => item.codigo !== codigo);
+    setFavoritos(resultado);
+  };
+
+  const listarFavoritos = () => {
+    return favoritos;
+  };
+
   return (
     <UsuarioContext.Provider
       value={{
@@ -205,6 +226,9 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
         editarCarrinho,
         removerCarrinho,
         limparCarrinho,
+        adicionarFavorito,
+        removerFavorito,
+        listarFavoritos
       }}
     >{children}</UsuarioContext.Provider>
   );

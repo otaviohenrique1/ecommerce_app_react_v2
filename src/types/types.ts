@@ -51,12 +51,13 @@ export type UsuarioContextType = {
   limparCarrinho: () => void;
   carrinhoProdutos: CarrinhoCompras[];
   setCarrinhoProdutos: (value: SetStateAction<CarrinhoCompras[]>) => void;
-  // adicionarFavorito: (produto: Produto) => void;
-  // removerFavorito: (id: number) => void;
-  // listarFavoritos: () => Produto;
+  adicionarFavorito: (favorito: Favorito) => void;
+  removerFavorito: (codigo: string) => void;
+  listarFavoritos: () => Favorito[];
 }
 
-interface Favorito {
+export interface Favorito {
+  codigo: string;
   nome: string;
   preco: number;
 }
