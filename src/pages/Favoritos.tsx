@@ -1,7 +1,12 @@
-import { Col, Container, Row, Table } from 'react-bootstrap';
+import { useContext } from 'react';
+import { Button, ButtonGroup, Col, Container, Row, Table } from 'react-bootstrap';
 import ContainerApp from '../components/ContainerApp';
+import { UsuarioContext } from '../context/usuarioContext';
+import { UsuarioContextType } from '../types/types';
 
 export default function Favoritos() {
+  const { listarFavoritos } = useContext(UsuarioContext || null) as UsuarioContextType;
+
   return (
     <ContainerApp>
       <Container>
@@ -20,12 +25,37 @@ export default function Favoritos() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
+                {(listarFavoritos().length === 0) ? (
+                  <tr>
+                    <td>Lista vazia</td>
+                  </tr>
+                ) : (
+                  <>
+                    {listarFavoritos().map((item, index) => {
+                      return (
+                        <tr>
+                          <td>{index}</td>
+                          <td>{item.nome}</td>
+                          <td>{item.preco}</td>
+                          <td>
+                            <ButtonGroup>
+                              {/* <Button
+                                variant="primary"
+                                size="sm"
+                                onClick={() => {}}
+                              >Exibir</Button> */}
+                              <Button
+                                variant="danger"
+                                size="sm"
+                                onClick={() => {}}
+                              >Remover</Button>
+                            </ButtonGroup>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </>
+                )}
               </tbody>
             </Table>
           </Col>

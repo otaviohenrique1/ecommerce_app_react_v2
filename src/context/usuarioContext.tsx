@@ -14,6 +14,8 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
   const [usuarios, setUsuarios] = useState<UsuarioDataTypes[]>([]);
   const [carrinhoProdutos, setCarrinhoProdutos] = useState<CarrinhoCompras[]>([]);
   const [favoritos, setFavoritos] = useState<Favorito[]>([]);
+  const [usuarioDataContext, setUsuarioDataContext] = useState<string>("");
+  const [authToken, setAuthToken] = useState<string>("");
 
   useEffect(() => {
     // 
@@ -207,6 +209,18 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
     return favoritos;
   };
 
+  const adicionarAuthToken = (auth_token: string) => {
+    setAuthToken(auth_token);
+  };
+
+  const exibirAuthToken = () => {
+    return authToken;
+  };
+
+  const removerAuthToken = () => {
+    setAuthToken("");
+  };
+
   return (
     <UsuarioContext.Provider
       value={{
@@ -219,6 +233,9 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
         editarUsuarioDaLista,
         loginUsuario,
         loginUsuario2,
+        adicionarAuthToken,
+        exibirAuthToken,
+        removerAuthToken,
         criarUsuario2,
         carrinhoProdutos,
         setCarrinhoProdutos,
@@ -228,7 +245,9 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
         limparCarrinho,
         adicionarFavorito,
         removerFavorito,
-        listarFavoritos
+        listarFavoritos,
+        usuarioDataContext,
+        setUsuarioDataContext
       }}
     >{children}</UsuarioContext.Provider>
   );

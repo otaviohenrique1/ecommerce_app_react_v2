@@ -26,8 +26,8 @@ export type UsuarioDataTypes = {
 
 export type UsuarioContextType = { 
   usuario: UsuarioDataTypes;
-  usuarios: UsuarioDataTypes[];
   setUsuario: (value: SetStateAction<UsuarioDataTypes>) => void;
+  usuarios: UsuarioDataTypes[];
   setUsuarios: (value: SetStateAction<UsuarioDataTypes[]>) => void;
   criarUsuario: (usuario: UsuarioDataTypes) => void;
   editarUsuario: (usuario: UsuarioDataTypes) => void;
@@ -45,6 +45,9 @@ export type UsuarioContextType = {
     status_code: number;
   };
   criarUsuario2: (usuario: UsuarioBase) => void;
+  adicionarAuthToken: (auth_token: string) => void;
+  exibirAuthToken: () => string;
+  removerAuthToken: () => void;
   adicionarCarrinho: (produto: CarrinhoCompras) => void;
   editarCarrinho: (codigo: string, produto: CarrinhoCompras) => void;
   removerCarrinho: (id: number) => void;
@@ -54,6 +57,8 @@ export type UsuarioContextType = {
   adicionarFavorito: (favorito: Favorito) => void;
   removerFavorito: (codigo: string) => void;
   listarFavoritos: () => Favorito[];
+  usuarioDataContext: string;
+  setUsuarioDataContext: (value: SetStateAction<string>) => void;
 }
 
 export interface Favorito {
