@@ -9,6 +9,7 @@ import Homepage from './Homepage';
 import Login from './Login';
 import NovoCadastro from './NovoCadastro';
 import Pagamento from './Pagamento';
+import { Pagina404 } from './Pagina404';
 import Perfil from './Perfil';
 import PerfilEdicao from './PerfilEdicao';
 import ProdutoDados from './ProdutoDados';
@@ -26,6 +27,7 @@ export default function AppRoutes() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/novo_cadastro" element={<NovoCadastro />} />
+        <Route path="*" element={<Pagina404 />} />
         <Route path="/homepage" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<Homepage />} />} />
         <Route path="/perfil" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<Perfil />} />} />
         <Route path="/perfil_edicao" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<PerfilEdicao />} />} />
