@@ -24,7 +24,7 @@ export default function Pagamento() {
     initialValues: initialValuesPagamentoForm,
     validationSchema: validationSchemaPagamentoForm,
     onSubmit: (values, formikHelpers) => {
-      navigate("/homepage");
+      navigate("/finalizacao_compra");
     }
   });
 

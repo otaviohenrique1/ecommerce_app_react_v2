@@ -4,6 +4,7 @@ import { UsuarioContext } from '../context/usuarioContext';
 import { UsuarioContextType } from '../types/types';
 import Carrinho from './Carrinho';
 import Favoritos from './Favoritos';
+import FinalizacaoCompra from './FinalizacaoCompra';
 import Historico from './Historico';
 import Homepage from './Homepage';
 import Login from './Login';
@@ -36,6 +37,7 @@ export default function AppRoutes() {
         <Route path="/carrinho" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<Carrinho />} />} />
         <Route path="/produto/:codigo" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<ProdutoDados />} />} />
         <Route path="/pagamento" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<Pagamento />} />} />
+        <Route path="/finalizacao_compra" element={<ProtectedRoute {...defaultProtectedRouteProps} outlet={<FinalizacaoCompra />} />} />
       </Routes>
     </BrowserRouter>
   );
