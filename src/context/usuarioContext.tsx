@@ -1,6 +1,6 @@
 import { createContext, FC, ReactNode, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { CarrinhoCompras, Favorito, UsuarioBase, UsuarioContextType, UsuarioDataTypes } from '../types/types';
+import { CarrinhoCompras, Favorito, Historico, HistoricoLista, UsuarioBase, UsuarioContextType, UsuarioDataTypes } from '../types/types';
 import { initialValuesFormUsuario } from '../utils/constants';
 
 export const UsuarioContext = createContext<UsuarioContextType | null>(null);
@@ -16,6 +16,7 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
   const [favoritos, setFavoritos] = useState<Favorito[]>([]);
   const [usuarioDataContext, setUsuarioDataContext] = useState<string>("");
   const [authToken, setAuthToken] = useState<string>("");
+  const [historicoLista, setHistoricoLista] = useState<HistoricoLista[]>([]);
 
   useEffect(() => {
     // 
@@ -188,13 +189,13 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
   const limparCarrinho = () => {
     setCarrinhoProdutos([]);
   };
-  
+
   const adicionarFavorito = (favorito: Favorito) => {
     let favoritoBusca = favoritos.find((itemBusca) => {
       return itemBusca.codigo === favorito.codigo;
     });
 
-    if (!favoritoBusca) {
+    if (favoritoBusca) {
       return;
     }
 
@@ -229,6 +230,42 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
     setAuthToken("");
   };
 
+  const adicionarHistorico = (historico: Historico) => {
+    let historicoBusca = historicoLista.find((itemBusca) => {
+      return itemBusca.codigo === historico.codigo;
+    });
+
+    if (historicoBusca) {
+      let resultado = historicoLista.map((item) => {
+        if (item.codigo === historico.codigo) {
+          return {
+            ...item,
+            codigo: historico.codigo,
+            nome: historico.nome,
+            preco: historico.preco,
+            data: new Date(),
+          }
+        }
+        return item;
+      });
+      setCarrinhoProdutos(resultado);
+    }
+
+    setHistoricoLista([
+      ...historicoLista,
+      {
+        codigo: historico.codigo,
+        nome: historico.nome,
+        preco: historico.preco,
+        data: new Date(),
+      }
+    ]);
+  };
+
+  const listarHistorico = () => {
+    return historicoLista;
+  };
+
   return (
     <UsuarioContext.Provider
       value={{
@@ -255,7 +292,9 @@ export const UsuarioProvider: FC<UsuarioProviderProps> = ({ children }) => {
         removerFavorito,
         listarFavoritos,
         usuarioDataContext,
-        setUsuarioDataContext
+        setUsuarioDataContext,
+        adicionarHistorico,
+        listarHistorico
       }}
     >{children}</UsuarioContext.Provider>
   );

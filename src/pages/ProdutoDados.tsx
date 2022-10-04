@@ -32,6 +32,7 @@ export default function ProdutoDados() {
     let resultado = listaProdutos.find((itemBusca) => {
       return itemBusca.codigo === validaCodigoUrlParam;
     });
+
     setData(resultado || initialValues);
   }, [codigo]);
 

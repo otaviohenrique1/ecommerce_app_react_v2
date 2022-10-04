@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Favoritos() {
   const navigate = useNavigate();
-  const { listarFavoritos, removerFavorito } = useContext(UsuarioContext || null) as UsuarioContextType;
+  const { listarFavoritos, removerFavorito, adicionarHistorico } = useContext(UsuarioContext || null) as UsuarioContextType;
 
   return (
     <ContainerApp>
@@ -44,7 +44,14 @@ export default function Favoritos() {
                               <Button
                                 variant="primary"
                                 size="sm"
-                                onClick={() => navigate(`/produto/${item.codigo}`)}
+                                onClick={() => {
+                                  adicionarHistorico({
+                                    codigo: item.codigo,
+                                    nome: item.nome,
+                                    preco: item.preco,
+                                  });
+                                  navigate(`/produto/${item.codigo}`);
+                                }}
                               >Exibir</Button>
                               <Button
                                 variant="danger"

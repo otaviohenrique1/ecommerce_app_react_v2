@@ -59,6 +59,21 @@ export type UsuarioContextType = {
   listarFavoritos: () => Favorito[];
   usuarioDataContext: string;
   setUsuarioDataContext: (value: SetStateAction<string>) => void;
+  adicionarHistorico: (historico: Historico) => void;
+  listarHistorico: () => HistoricoLista[];
+}
+
+export interface Historico {
+  codigo: string;
+  nome: string;
+  preco: number;
+}
+
+export interface HistoricoLista {
+  codigo: string;
+  nome: string;
+  preco: number;
+  data: Date;
 }
 
 export interface Favorito {
