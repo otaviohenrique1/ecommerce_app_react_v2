@@ -3,9 +3,11 @@ import { Button, ButtonGroup, Col, Container, Row, Table } from 'react-bootstrap
 import ContainerApp from '../components/ContainerApp';
 import { UsuarioContext } from '../context/usuarioContext';
 import { UsuarioContextType } from '../types/types';
+import { useNavigate } from "react-router-dom";
 
 export default function Favoritos() {
-  const { listarFavoritos } = useContext(UsuarioContext || null) as UsuarioContextType;
+  const navigate = useNavigate();
+  const { listarFavoritos, removerFavorito } = useContext(UsuarioContext || null) as UsuarioContextType;
 
   return (
     <ContainerApp>
@@ -39,15 +41,15 @@ export default function Favoritos() {
                           <td>{item.preco}</td>
                           <td>
                             <ButtonGroup>
-                              {/* <Button
+                              <Button
                                 variant="primary"
                                 size="sm"
-                                onClick={() => {}}
-                              >Exibir</Button> */}
+                                onClick={() => navigate(`/produto/${item.codigo}`)}
+                              >Exibir</Button>
                               <Button
                                 variant="danger"
                                 size="sm"
-                                onClick={() => {}}
+                                onClick={() => removerFavorito(item.codigo)}
                               >Remover</Button>
                             </ButtonGroup>
                           </td>

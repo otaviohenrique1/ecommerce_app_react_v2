@@ -3,6 +3,7 @@ import ContainerApp from '../components/ContainerApp';
 import * as yup from "yup";
 import { useFormik } from 'formik';
 import { Flex } from '../components/Flex';
+import { useNavigate } from "react-router-dom";
 
 interface PagamentoForm {
   formaPagamento: string;
@@ -17,10 +18,14 @@ const validationSchemaPagamentoForm = yup.object().shape({
 });
 
 export default function Pagamento() {
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: initialValuesPagamentoForm,
     validationSchema: validationSchemaPagamentoForm,
-    onSubmit: (values, formikHelpers) => {}
+    onSubmit: (values, formikHelpers) => {
+      navigate("/homepage");
+    }
   });
 
   const listaFormaPagamentos = [
@@ -68,10 +73,12 @@ export default function Pagamento() {
               <Flex justifyContent="end" alignItems="center" flexDirection="row">
                 <ButtonGroup>
                   <Button
+                    type="submit"
                     variant="success"
                     size="sm"
                   >Finalizar compra</Button>
                   <Button
+                    type="reset"
                     variant="danger"
                     size="sm"
                   >Limpar</Button>
