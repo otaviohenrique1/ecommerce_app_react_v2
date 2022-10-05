@@ -1,9 +1,15 @@
-import { Button, ButtonGroup, Col, Container, Form, Row } from 'react-bootstrap';
+import { Button, ButtonGroup, Col, Container, Form, ListGroup, Row } from 'react-bootstrap';
 import ContainerApp from '../components/ContainerApp';
 import * as yup from "yup";
 import { useFormik } from 'formik';
 import { Flex } from '../components/Flex';
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import { useContext } from 'react';
+import { UsuarioContext } from '../context/usuarioContext';
+import { UsuarioContextType } from '../types/types';
+import { ItemLista } from '../components/ItemLista';
 
 interface PagamentoForm {
   formaPagamento: string;
@@ -19,12 +25,30 @@ const validationSchemaPagamentoForm = yup.object().shape({
 
 export default function Pagamento() {
   const navigate = useNavigate();
+  const { usuario } = useContext(UsuarioContext || null) as UsuarioContextType;
+  const SwalModal = withReactContent(Swal);
 
   const formik = useFormik({
     initialValues: initialValuesPagamentoForm,
     validationSchema: validationSchemaPagamentoForm,
     onSubmit: (values, formikHelpers) => {
-      navigate("/finalizacao_compra");
+      SwalModal.fire({
+        title: "Aviso",
+        icon: "question",
+        html: <p>Confirmar a compra</p>,
+        confirmButtonText: "Sim",
+        cancelButtonText: "Não",
+        showCancelButton: true,
+        buttonsStyling: false,
+        customClass: {
+          confirmButton: "btn btn-primary mx-1",
+          cancelButton: "btn btn-danger mx-1",
+        }
+      }).then(({ isConfirmed }) => {
+        if (isConfirmed) {
+          navigate("/finalizacao_compra");
+        }
+      });
     }
   });
 
@@ -54,7 +78,7 @@ export default function Pagamento() {
                   aria-label="Estado select"
                   name="estado"
                   value={formik.values.formaPagamento}
-                  // onChange={formik.handleChange}
+                // onChange={formik.handleChange}
                 >
                   <option value="">Selecione</option>
                   {listaFormaPagamentos.map((item, index) => (
@@ -86,7 +110,25 @@ export default function Pagamento() {
               </Flex>
             </Form>
           </Col>
-          <Col sm={12}></Col>
+          <Col sm={12}>
+            <h2 className="text-center">Contato</h2>
+            <ListGroup>
+              <ItemLista label="E-mail:" valor={usuario.email} />
+              <ItemLista label="Telefone:" valor={usuario.telefone} />
+            </ListGroup>
+          </Col>
+          <Col sm={12}>
+            <h2 className="text-center">Endereço</h2>
+            <ListGroup>
+              <ItemLista label="Rua:" valor={usuario.rua} />
+              <ItemLista label="Numero:" valor={usuario.numero} />
+              <ItemLista label="Complemento:" valor={usuario.complemento} />
+              <ItemLista label="Bairro:" valor={usuario.bairro} />
+              <ItemLista label="CEP:" valor={usuario.cep} />
+              <ItemLista label="Cidade:" valor={usuario.cidade} />
+              <ItemLista label="Estado:" valor={usuario.estado} />
+            </ListGroup>
+          </Col>
         </Row>
       </Container>
     </ContainerApp>
